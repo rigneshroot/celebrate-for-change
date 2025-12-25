@@ -9,7 +9,7 @@ export default function About() {
             <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center rounded-sm rotate-45 shadow-[0_0_40px_rgba(16,185,129,0.3)] mb-4">
               <span className="text-3xl -rotate-45">⚡</span>
             </div>
-            <h1 className="tesla-header text-4xl md:text-6xl tracking-[0.4em] uppercase">
+            <h1 className="tesla-header text-4xl md:text-6xl tracking-[0.2em] md:tracking-[0.4em] uppercase">
               THE <span className="gradient-text">MISSION</span>
             </h1>
           </div>
@@ -19,14 +19,14 @@ export default function About() {
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12">
-          <div className="glass-card p-12 border-l-4 border-l-emerald-500 fade-in-up delay-100 group">
+          <div className="glass-card p-6 md:p-12 border-l-4 border-l-emerald-500 fade-in-up delay-100 group">
             <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-emerald-500 transition-colors">The Purpose</h2>
             <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
               Celebrate for Change is a student-built social impact platform designed to redirect the generosity of personal celebrations—like birthdays—toward verified organizations addressing real-world problems.
             </p>
           </div>
 
-          <div className="glass-card p-12 border-l-4 border-l-teal-500 fade-in-up delay-200 group">
+          <div className="glass-card p-6 md:p-12 border-l-4 border-l-teal-500 fade-in-up delay-200 group">
             <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-teal-500 transition-colors">The Mission</h2>
             <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
               I curate a selection of high-impact, verified charities across key sectors. By redirecting users directly to official donation pages, I remove intermediaries and maximize transparency.
@@ -48,7 +48,7 @@ export default function About() {
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 pointer-events-none"></div>
           </div>
 
-          <div className="space-y-8 glass-card p-12 border-r-4 border-r-emerald-500 fade-in-up delay-300 flex flex-col justify-center h-full">
+          <div className="space-y-8 glass-card p-6 md:p-12 border-r-4 border-r-emerald-500 fade-in-up delay-300 flex flex-col justify-center h-full">
             <div className="space-y-4">
               <h2 className="tesla-header text-2xl tracking-[0.3em] text-white">The Visionary</h2>
               <div className="tesla-header text-xs text-emerald-500 tracking-[0.5em]">Rignesh | Student</div>
@@ -64,8 +64,8 @@ export default function About() {
           </div>
         </section>
 
-        <section className="glass-card p-16 border-t border-white/10 fade-in-up delay-400">
-          <h2 className="tesla-header text-2xl text-center mb-16 tracking-[0.3em] uppercase">Core Values</h2>
+        <section className="glass-card p-6 md:p-16 border-t border-white/10 fade-in-up delay-400">
+          <h2 className="tesla-header text-2xl text-center mb-16 tracking-[0.1em] md:tracking-[0.3em] uppercase">Core Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center uppercase tracking-[0.2em] text-[10px] font-montserrat font-light">
             <div className="space-y-6 group">
               <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">⚡</div>

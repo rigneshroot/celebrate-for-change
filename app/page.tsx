@@ -51,7 +51,7 @@ export default function Home() {
         {/* Content */}
         <div className="relative text-center space-y-12 max-w-5xl mx-auto z-10 px-4">
           <div className="space-y-4 fade-in-up">
-            <div className="tesla-logo text-emerald-500 text-xs md:text-sm tracking-[0.8em] font-light mb-4 text-center">
+            <div className="tesla-logo text-emerald-500 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.8em] font-light mb-4 text-center">
               ESTABLISHED 2024
             </div>
             <h1 className="tesla-header text-4xl md:text-8xl leading-tight float-animation">
@@ -66,13 +66,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-6 justify-center pt-12 fade-in-up delay-200">
             <Link
               href="#missions"
-              className="px-16 py-5 bg-white text-black tesla-header text-[12px] tracking-[0.3em] hover:bg-emerald-500 transition-all duration-500 transform active:scale-95 shadow-2xl"
+              className="px-6 py-3 md:px-16 md:py-5 bg-white text-black tesla-header text-[12px] tracking-[0.3em] hover:bg-emerald-500 transition-all duration-500 transform active:scale-95 shadow-2xl"
             >
               View Causes
             </Link>
             <Link
               href="#how-it-works"
-              className="px-16 py-5 bg-transparent border border-white/20 text-white tesla-header text-[12px] tracking-[0.3em] hover:bg-white/10 transition-all duration-500 backdrop-blur-md"
+              className="px-6 py-3 md:px-16 md:py-5 bg-transparent border border-white/20 text-white tesla-header text-[12px] tracking-[0.3em] hover:bg-white/10 transition-all duration-500 backdrop-blur-md"
             >
               How It Works
             </Link>
@@ -135,7 +135,7 @@ export default function Home() {
 
             {/* Content Top */}
             <div className="relative z-20 text-center space-y-6 px-4 fade-in-up">
-              <h2 className="tesla-header text-4xl md:text-7xl text-white tracking-[0.5em] group-hover:text-emerald-400 transition-colors duration-700">
+              <h2 className="tesla-header text-4xl md:text-7xl text-white tracking-[0.2em] md:tracking-[0.5em] group-hover:text-emerald-400 transition-colors duration-700">
                 {region.name}
               </h2>
               <p className="text-white/40 text-[10px] md:text-xs font-montserrat tracking-[0.4em] max-w-xl mx-auto leading-loose">

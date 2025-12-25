@@ -12,13 +12,13 @@ export default function Navbar() {
             CELEBRATE <span className="text-emerald-500 font-normal">FOR</span> CHANGE
           </span>
         </Link>
-        <div className="flex items-center space-x-12">
+        <div className="flex items-center space-x-4 md:space-x-12">
           <Link href="/about" className="tesla-header text-[10px] tracking-[0.3em] text-white/50 hover:text-emerald-500 transition-all duration-300">
             ABOUT
           </Link>
           <Link
-            href="/usa"
-            className="px-8 py-3 bg-white text-black tesla-header text-[10px] tracking-[0.2em] hover:bg-emerald-500 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-emerald-500/40"
+            href="/#missions"
+            className="px-4 py-2 md:px-8 md:py-3 bg-white text-black tesla-header text-[10px] tracking-[0.2em] hover:bg-emerald-500 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-emerald-500/40"
           >
             Choose a Cause
           </Link>
