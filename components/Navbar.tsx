@@ -20,7 +20,7 @@ export default function Navbar() {
             href="/usa"
             className="px-8 py-3 bg-white text-black tesla-header text-[10px] tracking-[0.2em] hover:bg-emerald-500 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-emerald-500/40"
           >
-            GET STARTED
+            Choose a Cause
           </Link>
         </div>
       </div>

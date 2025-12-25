@@ -17,7 +17,7 @@ export default function UK() {
           <h1 className="tesla-header text-5xl md:text-8xl text-white drop-shadow-2xl tracking-[0.4em]">
             UNITED KINGDOM
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto font-montserrat font-light tracking-[0.2em] uppercase text-xs md:text-sm leading-relaxed">
+          <p className="text-white/80 max-w-2xl mx-auto font-montserrat font-light tracking-[0.2em] text-xs md:text-sm leading-relaxed">
             Contribute to impactful charities based in the United Kingdom.
           </p>
         </div>

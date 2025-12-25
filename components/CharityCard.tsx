@@ -65,7 +65,7 @@ export default function CharityCard({ charity }: { charity: Charity }) {
           {charity.name}
         </h3>
 
-        <p className="text-white text-xs font-light leading-loose mb-10 flex-grow line-clamp-4 font-montserrat tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-opacity duration-500">
+        <p className="text-white text-xs font-light leading-loose mb-10 flex-grow line-clamp-4 font-montserrat tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-opacity duration-500">
           {charity.description || "Support this verified organization making real-world impact through your donation."}
         </p>
 

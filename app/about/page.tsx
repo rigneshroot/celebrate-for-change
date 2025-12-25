@@ -13,22 +13,22 @@ export default function About() {
               THE <span className="gradient-text">MISSION</span>
             </h1>
           </div>
-          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-light tracking-[0.2em] leading-relaxed max-w-2xl mx-auto uppercase font-montserrat">
-            REIMAGINING CELEBRATION THROUGH GLOBAL SOCIAL IMPACT.
+          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-light tracking-[0.2em] leading-relaxed max-w-2xl mx-auto font-montserrat">
+            Reimagining celebration through global social impact.
           </p>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12">
           <div className="glass-card p-12 border-l-4 border-l-emerald-500 fade-in-up delay-100 group">
             <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-emerald-500 transition-colors">The Purpose</h2>
-            <p className="text-slate-400 font-montserrat font-light leading-loose uppercase tracking-[0.15em] text-[11px]">
+            <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
               Celebrate for Change is a student-built social impact platform designed to redirect the generosity of personal celebrations—like birthdays—toward verified organizations addressing real-world problems.
             </p>
           </div>
 
           <div className="glass-card p-12 border-l-4 border-l-teal-500 fade-in-up delay-200 group">
             <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-teal-500 transition-colors">The Mission</h2>
-            <p className="text-slate-400 font-montserrat font-light leading-loose uppercase tracking-[0.15em] text-[11px]">
+            <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
               I curate a selection of high-impact, verified charities across key sectors. By redirecting users directly to official donation pages, I remove intermediaries and maximize transparency.
             </p>
           </div>
@@ -54,7 +54,7 @@ export default function About() {
               <div className="tesla-header text-xs text-emerald-500 tracking-[0.5em]">Rignesh | Student</div>
             </div>
 
-            <div className="space-y-6 text-slate-400 font-montserrat font-light leading-loose uppercase tracking-[0.15em] text-[11px]">
+            <div className="space-y-6 text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
               <p>Seeing the world through a lens of purpose and possibility.</p>
               <p>Driven to make an impact and leave things better than I found them.</p>
               <p className="text-white border-l-2 border-emerald-500 pl-4 py-2 bg-emerald-500/5">
@@ -70,17 +70,17 @@ export default function About() {
             <div className="space-y-6 group">
               <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">⚡</div>
               <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Ethical Design</h3>
-              <p className="text-slate-500 leading-relaxed">No tracking. No ads. No profit motive.</p>
+              <p className="text-slate-500 leading-relaxed normal-case">No tracking. No ads. No profit motive.</p>
             </div>
             <div className="space-y-6 group">
               <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">💎</div>
               <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Transparency</h3>
-              <p className="text-slate-500 leading-relaxed">Direct-to-charity routing protocols.</p>
+              <p className="text-slate-500 leading-relaxed normal-case">Direct-to-charity routing protocols.</p>
             </div>
             <div className="space-y-6 group">
               <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">🎓</div>
               <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Education</h3>
-              <p className="text-slate-500 leading-relaxed">Showcasing the intersection of tech and empathy.</p>
+              <p className="text-slate-500 leading-relaxed normal-case">Showcasing the intersection of tech and empathy.</p>
             </div>
           </div>
         </section>

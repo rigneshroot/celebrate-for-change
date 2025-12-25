@@ -59,8 +59,8 @@ export default function Home() {
             </h1>
           </div>
 
-          <p className="text-sm md:text-lg text-white/50 max-w-2xl mx-auto fade-in-up delay-100 font-montserrat tracking-[0.3em] uppercase leading-relaxed text-center">
-            REIMAGINING TRADITION THROUGH <br className="hidden md:block" /> GLOBAL SOCIAL IMPACT.
+          <p className="text-sm md:text-lg text-white/50 max-w-2xl mx-auto fade-in-up delay-100 font-montserrat tracking-[0.3em] leading-relaxed text-center">
+            Turning personal celebrations into <br className="hidden md:block" /> direct social impact.
           </p>
 
           <div className="flex flex-col md:flex-row gap-6 justify-center pt-12 fade-in-up delay-200">
@@ -94,9 +94,9 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
             {[
-              { id: '01', title: 'SELECT COUNTRY', desc: 'CHOOSE WHERE YOU WANT YOUR BIRTHDAY TO MAKE A DIFFERENCE.' },
-              { id: '02', title: 'CHOOSE A CAUSE', desc: 'PICK A VERIFIED NONPROFIT ALIGNED WITH WHAT MATTERS TO YOU.' },
-              { id: '03', title: 'DIRECT IMPACT', desc: 'DONATE DIRECTLY TO THE ORGANIZATION — NO MIDDLEMEN, FULL TRANSPARENCY.' }
+              { id: '01', title: 'SELECT COUNTRY', desc: 'Choose where you want your birthday to make a difference.' },
+              { id: '02', title: 'CHOOSE A CAUSE', desc: 'Pick a verified nonprofit aligned with what matters to you.' },
+              { id: '03', title: 'DIRECT IMPACT', desc: 'Donate directly to the organization — no middlemen, full transparency.' }
             ].map((step) => (
               <div key={step.id} className="space-y-8 group border-t border-white/10 pt-10 hover:border-emerald-500/50 transition-colors">
                 <div className="tesla-header text-6xl text-white/40 group-hover:text-emerald-500 transition-colors duration-500">
@@ -138,7 +138,7 @@ export default function Home() {
               <h2 className="tesla-header text-4xl md:text-7xl text-white tracking-[0.5em] group-hover:text-emerald-400 transition-colors duration-700">
                 {region.name}
               </h2>
-              <p className="text-white/40 text-[10px] md:text-xs font-montserrat tracking-[0.4em] uppercase max-w-xl mx-auto leading-loose">
+              <p className="text-white/40 text-[10px] md:text-xs font-montserrat tracking-[0.4em] max-w-xl mx-auto leading-loose">
                 {region.description}
               </p>
             </div>
