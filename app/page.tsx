@@ -52,7 +52,7 @@ export default function Home() {
         <div className="relative text-center space-y-12 max-w-5xl mx-auto z-10 px-4">
           <div className="space-y-4 fade-in-up">
             <div className="tesla-logo text-emerald-500 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.8em] font-light mb-4 text-center">
-              ESTABLISHED 2024
+              ESTABLISHED 2025
             </div>
             <h1 className="tesla-header text-4xl md:text-8xl leading-tight float-animation">
               CELEBRATE <span className="gradient-text block mt-2">FOR CHANGE</span>
