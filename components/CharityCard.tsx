@@ -20,13 +20,26 @@ const categoryStyles = {
     gradient: 'from-amber-50 to-yellow-50',
     darkGradient: 'from-amber-950 to-yellow-950'
   },
+  'Child Rights': {
+    badge: 'bg-gradient-to-r from-rose-400 to-red-500 text-white',
+    gradient: 'from-rose-50 to-red-50',
+    darkGradient: 'from-rose-950 to-red-950'
+  },
+  'School Mid-day Meal Program': {
+    badge: 'bg-gradient-to-r from-purple-400 to-violet-500 text-white',
+    gradient: 'from-purple-50 to-violet-50',
+    darkGradient: 'from-purple-950 to-violet-950'
+  }
 };
+
 
 // New categoryColors mapping for the updated badge style
 const categoryColors = {
   'Environment': 'text-emerald-400',
   'Education': 'text-blue-400',
   'Elderly Support': 'text-amber-400',
+  'Child Rights': 'text-rose-400',
+  'School Mid-day Meal Program': 'text-purple-400',
 };
 
 export default function CharityCard({ charity }: { charity: Charity }) {

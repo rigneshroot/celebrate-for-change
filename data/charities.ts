@@ -1,6 +1,6 @@
 // data/charities.ts
 
-export type Category = 'Environment' | 'Education' | 'Elderly Support';
+export type Category = 'Environment' | 'Education' | 'Elderly Support' | 'Child Rights' | 'School Mid-day Meal Program';
 
 export interface Charity {
   name: string;
@@ -67,7 +67,7 @@ export const charitiesIndia: Charity[] = [
     name: "Pratham",
     category: "Education",
     url: "https://www.pratham.org/donation/",
-    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop",
+    image: "/images/charities/pratham.png", // Updated custom image
     description: "Improving the quality of education for millions of children."
   },
   {
@@ -76,6 +76,27 @@ export const charitiesIndia: Charity[] = [
     url: "https://www.helpageindia.org/donate/",
     image: "/images/charities/helpage_india.png",
     description: "Advocating for the rights and well-being of disadvantaged older persons."
+  },
+  {
+    name: "Team Everest",
+    category: "Education",
+    url: "https://www.teameverest.ngo/",
+    image: "/images/charities/team_everest.png",
+    description: "Empowering youth through education and community development."
+  },
+  {
+    name: "CRY (Child Rights and You)",
+    category: "Child Rights",
+    url: "https://www.cry.org/",
+    image: "/images/charities/cry.png",
+    description: "Restoring child rights by ensuring every child in India can reach their potential."
+  },
+  {
+    name: "Akshaya Patra Foundation",
+    category: "School Mid-day Meal Program",
+    url: "https://www.akshayapatra.org/",
+    image: "/images/charities/akshaya_patra.png",
+    description: "The world's largest NGO-run school meal program, supporting education by fighting hunger."
   },
 ];
 
