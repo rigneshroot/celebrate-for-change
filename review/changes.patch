@@ -1,0 +1,4313 @@
+--- a/README.md
++++ b/README.md
+@@ -1,79 +1,39 @@
+ # Celebrate for Change
+ 
+-Celebrate for Change is a student-built social impact platform that redirects
+-the generosity of personal celebrations—such as birthdays—toward verified
+-nonprofit organizations through direct, transparent donation links.
++A student-built guide for finding organisations to support on birthdays and other celebrations. Visitors browse by cause and where organisations work, then continue to official websites. This site does not collect or process donations.
+ 
+-The project explores how individual milestones can be reframed as economic
+-and behavioral incentives for positive social impact.
++## Run locally
+ 
+----
++Use Node.js 20.9 or later (Node 24 was used for this review).
+ 
+-## Why This Project Exists
+-
+-Many charitable platforms introduce intermediaries that reduce transparency
+-and distance donors from impact. Celebrate for Change was built to demonstrate
+-a simpler model: users are routed directly to official nonprofit donation pages,
+-ensuring clarity, trust, and ethical design.
+-
+-This project was created as part of an independent exploration of economics,
+-incentives, and social impact through technology.
+-
+----
+-
+-## How It Works
+-
+-- Users select a country and cause
+-- The platform curates verified nonprofit organizations
+-- Donations are made directly on official charity websites
+-- No payments or user data are collected or processed
+-
+----
+-
+-## Focus Areas
+-
+-- Transparency in charitable giving
+-- Incentives and behavioral economics
+-- Ethical product design
+-- Global social impact
+-
+----
+-
+-## Supported Regions
+-
+-- United States
+-- India
+-- United Kingdom
+-
+----
+-
+-## Tech Stack
+-
+-- **Framework:** Next.js (App Router)
+-- **Styling:** Tailwind CSS
+-- **Fonts:** Google Fonts (Michroma, Montserrat)
+-- **Deployment:** Vercel
+-
+----
+-
+-## Getting Started
+-
+-### Prerequisites
+-- Node.js 18+
+-- npm or yarn
+-
+-### Installation
+-
+-```bash
+-git clone https://github.com/rigneshroot/celebrate-for-change.git
+-cd celebrate-for-change
+-npm install
++```sh
++npm ci
+ npm run dev
+ ```
+ 
+-Open http://localhost:3000 in your browser.
++Open http://localhost:3000. For the optimized version:
+ 
+-## Website
+-https://www.celebrateforchange.org/
++```sh
++npm run build
++npm start -- --hostname 127.0.0.1
++```
+ 
+-Built with ⚡ by Rignesh
++## Pages and content
++
++Original routes `/`, `/india`, `/usa`, `/uk`, `/about` and `/disclaimer` remain. `/global`, `/methodology` and `/message` add international work, transparent checking notes and an optional editable birthday message. All 15 destinations on the original live site are retained.
++
++`data/charities.ts` holds the listings. Locations describe work, not donor eligibility or legal domicile. Update the source-check date only after actually reviewing the source and destination. Record limits in the card and in `review/SOURCES.md`.
++
++Message drafts live in React state only. There are no databases, analytics, ad pixels, accounts or payment handlers. Clipboard and native sharing are user-initiated, with manual text selection when unavailable. Hosting logs and external websites have separate privacy implications.
++
++## Indexing and deployment
++
++Nothing in this change has been published. Local and preview builds default to `noindex, nofollow`, an `X-Robots-Tag` header and `Disallow: /`. Their sitemap is empty. Canonicals and social URLs point to https://www.celebrateforchange.org.
++
++After owner approval, build the actual production deployment with `SITE_INDEXABLE=true`; on Vercel this also requires `VERCEL_ENV=production`. Set that variable only for the production environment, never globally for all environments. Rebuild when changing it. This enables the production sitemap and crawl directives. No new external service is required.
++
++The site uses Next.js prerendered HTML, native CSS/SVG artwork and system fonts. Existing photos remain in `public/images` but are unused because licensing/provenance is undocumented.
++
++## Review package
++
++See `review/REVIEW.md` for actual checks, unresolved facts and known limitations, `review/SOURCES.md` for source evidence, and `review/comparison.html` for before/after screenshots. `review/original-source.tar.gz` preserves the starting local source; the supplied folder was not a Git repository.
+--- a/app/about/page.tsx
++++ b/app/about/page.tsx
+@@ -1,90 +1,76 @@
+-import Image from 'next/image';
+-
++import Link from "next/link";
++import { pageMetadata } from "@/lib/site";
++import Icon from "@/components/Icon";
++export const metadata = pageMetadata(
++  "About this student-built guide",
++  "Meet Celebrate for Change, a student project by Rignesh that helps people discover organisations to support through birthdays and other celebrations.",
++  "/about",
++);
+ export default function About() {
+   return (
+-    <div className="flex flex-col items-center justify-center py-20 px-4 bg-black min-h-screen">
+-      <div className="max-w-6xl w-full space-y-24">
+-        <section className="text-center space-y-12 fade-in-up">
+-          <div className="flex flex-col items-center space-y-4 mb-4">
+-            <div className="w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center rounded-sm rotate-45 shadow-[0_0_40px_rgba(16,185,129,0.3)] mb-4">
+-              <span className="text-3xl -rotate-45">⚡</span>
+-            </div>
+-            <h1 className="tesla-header text-4xl md:text-6xl tracking-[0.2em] md:tracking-[0.4em] uppercase">
+-              THE <span className="gradient-text">MISSION</span>
+-            </h1>
+-          </div>
+-          <p className="text-lg md:text-xl text-slate-500 dark:text-slate-400 font-light tracking-[0.2em] leading-relaxed max-w-2xl mx-auto font-montserrat">
+-            Reimagining celebration through global social impact.
++    <div className="shell prose-page">
++      <p className="eyebrow">A small guide, with a simple purpose</p>
++      <h1>
++        Make a celebration
++        <br />
++        mean something more.
++      </h1>
++      <p className="lead">
++        Celebrate for Change helps people find organisations to support for
++        birthdays and other occasions, then continue to those organisations’ own
++        websites.
++      </p>
++      <div className="about-founder">
++        <div className="founder-monogram" aria-hidden="true">
++          R<span>✳</span>
++        </div>
++        <div>
++          <p className="eyebrow">The person behind the guide</p>
++          <h2>Rignesh, student & creator</h2>
++          <p>
++            This is a student-built project exploring how personal celebrations
++            can encourage thoughtful giving. It brings causes and official links
++            together in one place so visitors can decide what matters to them.
+           </p>
+-        </section>
+-
+-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12">
+-          <div className="glass-card p-6 md:p-12 border-l-4 border-l-emerald-500 fade-in-up delay-100 group">
+-            <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-emerald-500 transition-colors">The Purpose</h2>
+-            <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
+-              Celebrate for Change is a student-built social impact platform designed to redirect the generosity of personal celebrations—like birthdays—toward verified organizations addressing real-world problems.
+-            </p>
+-          </div>
+-
+-          <div className="glass-card p-6 md:p-12 border-l-4 border-l-teal-500 fade-in-up delay-200 group">
+-            <h2 className="tesla-header text-xl mb-8 tracking-[0.2em] uppercase group-hover:text-teal-500 transition-colors">The Mission</h2>
+-            <p className="text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
+-              I curate a selection of high-impact, verified charities across key sectors. By redirecting users directly to official donation pages, I remove intermediaries and maximize transparency.
+-            </p>
+-          </div>
+-        </section>
+-
+-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-12 items-stretch">
+-          <div className="relative group overflow-hidden glass-card p-2 rounded-sm border-emerald-500/30 flex flex-col h-full min-h-[400px]">
+-            <div className="relative w-full h-full flex-grow">
+-              <Image
+-                src="/images/creator/rignesh.png"
+-                alt="Rignesh - Creator"
+-                fill
+-                className="grayscale group-hover:grayscale-0 transition-all duration-700 object-contain"
+-                sizes="(max-width: 768px) 100vw, 50vw"
+-              />
+-            </div>
+-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 pointer-events-none"></div>
+-          </div>
+-
+-          <div className="space-y-8 glass-card p-6 md:p-12 border-r-4 border-r-emerald-500 fade-in-up delay-300 flex flex-col justify-center h-full">
+-            <div className="space-y-4">
+-              <h2 className="tesla-header text-2xl tracking-[0.3em] text-white">The Visionary</h2>
+-              <div className="tesla-header text-xs text-emerald-500 tracking-[0.5em]">Rignesh | Student</div>
+-            </div>
+-
+-            <div className="space-y-6 text-slate-400 font-montserrat font-light leading-loose tracking-[0.15em] text-[11px] normal-case">
+-              <p>Seeing the world through a lens of purpose and possibility.</p>
+-              <p>Driven to make an impact and leave things better than I found them.</p>
+-              <p className="text-white border-l-2 border-emerald-500 pl-4 py-2 bg-emerald-500/5">
+-                Join me in making the world a better place—one birthday at a time.
+-              </p>
+-            </div>
+-          </div>
+-        </section>
+-
+-        <section className="glass-card p-6 md:p-16 border-t border-white/10 fade-in-up delay-400">
+-          <h2 className="tesla-header text-2xl text-center mb-16 tracking-[0.1em] md:tracking-[0.3em] uppercase">Core Values</h2>
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center uppercase tracking-[0.2em] text-[10px] font-montserrat font-light">
+-            <div className="space-y-6 group">
+-              <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">⚡</div>
+-              <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Ethical Design</h3>
+-              <p className="text-slate-500 leading-relaxed normal-case">No tracking. No ads. No profit motive.</p>
+-            </div>
+-            <div className="space-y-6 group">
+-              <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">💎</div>
+-              <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Transparency</h3>
+-              <p className="text-slate-500 leading-relaxed normal-case">Direct-to-charity routing protocols.</p>
+-            </div>
+-            <div className="space-y-6 group">
+-              <div className="text-emerald-500 text-3xl group-hover:scale-110 transition-transform">🎓</div>
+-              <h3 className="tesla-header text-xs group-hover:text-emerald-400 transition-colors">Education</h3>
+-              <p className="text-slate-500 leading-relaxed normal-case">Showcasing the intersection of tech and empathy.</p>
+-            </div>
+-          </div>
+-        </section>
++        </div>
+       </div>
++      <section>
++        <h2>A starting point for your own choice.</h2>
++        <p>
++          The guide explains what listed organisations do, where they work and
++          what kind of page each link opens. Some links lead to donation pages;
++          others lead to an organisation’s homepage, a gift membership or a
++          product.
++        </p>
++        <p>
++          Inclusion is not a ranking, an endorsement or a promise of
++          effectiveness. Celebrate for Change is not a donation processor or an
++          independent impact auditor, and does not claim a partnership with the
++          listed organisations.
++        </p>
++        <Link className="text-link" href="/methodology">
++          Read how listings are checked <Icon name="arrow" />
++        </Link>
++      </section>
++      <section>
++        <h2>Giving happens on the official site.</h2>
++        <p>
++          We do not collect or process donations. The organisation or its
++          payment provider handles any contribution, receipt and payment
++          information. Please check its current terms before giving.
++        </p>
++      </section>
++      <section>
++        <h2>Keep it personal, and keep it optional.</h2>
++        <p>
++          A birthday request can explain why you chose a cause and make it clear
++          that giving is optional. Our message tool provides an editable
++          starting point; you decide what to send and to whom.
++        </p>
++        <Link href="/message" className="button">
++          Make a birthday message <Icon name="arrow" />
++        </Link>
++      </section>
+     </div>
+   );
+ }
+--- a/app/disclaimer/page.tsx
++++ b/app/disclaimer/page.tsx
+@@ -1,37 +1,74 @@
+-import Link from 'next/link';
+-
++import Link from "next/link";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Disclaimer and privacy",
++  "Celebrate for Change does not collect or process donations. Read about external websites, listing limitations and the local birthday-message tool.",
++  "/disclaimer",
++);
+ export default function Disclaimer() {
+   return (
+-    <div className="flex flex-col items-center justify-center py-32 px-8 bg-black min-h-[80vh]">
+-      <div className="glass-card max-w-2xl w-full p-16 text-center space-y-16 border-t-2 border-t-emerald-500 fade-in-up">
+-        <div className="flex flex-col items-center space-y-6">
+-          <div className="text-emerald-500 text-4xl mb-4">⚖️</div>
+-          <h1 className="tesla-header text-2xl md:text-3xl tracking-[0.4em] uppercase text-white">
+-            LEGAL <span className="gradient-text">DISCLAIMER</span>
+-          </h1>
+-        </div>
+-
+-        <div className="space-y-12">
+-          <p className="text-white font-montserrat text-xs md:text-sm leading-loose tracking-[0.2em] font-light">
+-            This website does not collect or process donations. All contributions are made directly through the official donation pages of the respective nonprofit organizations.
+-          </p>
+-
+-          <div className="h-px w-32 bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto"></div>
+-
+-          <p className="text-slate-500 font-montserrat text-[10px] md:text-[11px] leading-relaxed tracking-[0.15em] font-light">
+-            Developed as a student project for educational and social-impact purposes.
+-          </p>
+-        </div>
+-
+-        <div className="pt-8">
+-          <Link
+-            href="/"
+-            className="inline-block px-12 py-4 bg-white text-black tesla-header text-[12px] tracking-[0.2em] hover:bg-emerald-500 transition-all duration-500 transform active:scale-95 shadow-2xl"
+-          >
+-            Back to Site
+-          </Link>
+-        </div>
+-      </div>
++    <div className="shell prose-page">
++      <p className="eyebrow">Clear from the start</p>
++      <h1>Disclaimer & privacy.</h1>
++      <section className="notice">
++        <h2>We do not handle donations.</h2>
++        <p>
++          This website does not collect or process donations. Contributions are
++          made through the respective organisations’ own websites and their
++          payment providers.
++        </p>
++        <p>
++          Developed as a student project for educational and social-impact
++          purposes.
++        </p>
++      </section>
++      <section>
++        <h2>External websites and purchases</h2>
++        <p>
++          Some listings lead to official homepages, gift memberships or
++          certificate products rather than donation forms. Links identify the
++          type of destination. Organisations and payment providers set their own
++          fees, eligibility, privacy policies and payment terms. We cannot
++          promise that all of a payment goes to a particular programme.
++        </p>
++        <p>
++          Celebrate for Change does not control external content, issue
++          receipts, handle refunds, confirm contributions or claim an official
++          partnership with listed organisations.
++        </p>
++      </section>
++      <section>
++        <h2>Information, not an impact guarantee</h2>
++        <p>
++          Descriptions are summaries of official sources, not independent
++          audits. Inclusion does not establish charitable status, tax benefits,
++          suitability for a particular donor or comparative effectiveness.
++          Review the organisation’s current information before making a
++          decision.
++        </p>
++        <Link href="/methodology">
++          Read the selection and checking method →
++        </Link>
++      </section>
++      <section>
++        <h2>Your message stays with you</h2>
++        <p>
++          The birthday-message tool keeps your draft in browser memory while the
++          page is open. It does not save it in a database or browser storage,
++          and it clears on reload. Copying places the text on your clipboard.
++          Sharing passes it to your device’s share sheet, where you choose what
++          happens next.
++        </p>
++        <p>
++          The application does not add analytics, advertising trackers, account
++          registration or payment forms. The hosting provider may process normal
++          request logs, and external websites have their own privacy practices.
++          We do not claim that visits leave no technical records.
++        </p>
++      </section>
++      <Link className="button" href="/#missions">
++        Back to the guide
++      </Link>
+     </div>
+   );
+ }
+--- a/app/error.tsx
++++ b/app/error.tsx
+@@ -0,0 +1,18 @@
++"use client";
++export default function ErrorPage({ reset }: { reset: () => void }) {
++  return (
++    <div className="shell not-found">
++      <h1>That page couldn’t load.</h1>
++      <p>
++        Please try again. Your unsaved message may need to be rewritten if you
++        reload.
++      </p>
++      <button className="button" onClick={reset}>
++        Try again
++      </button>
++      <a className="text-link" href="/">
++        Return to the guide
++      </a>
++    </div>
++  );
++}
+--- a/app/global/page.tsx
++++ b/app/global/page.tsx
+@@ -0,0 +1,10 @@
++import RegionPage from "@/components/RegionPage";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "International Celebration Giving",
++  "Compare international environmental organisations, donation pages, gift memberships and plastic certificates. Check the terms on each official website.",
++  "/global",
++);
++export default function Page() {
++  return <RegionPage region="global" />;
++}
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -1,171 +1,1549 @@
+ @import "tailwindcss";
+-
+-
+ :root {
+-  --background: #000000;
+-  --foreground: #ffffff;
+-
+-  /* Vibrant gradient colors */
+-  --gradient-start: #10b981;
+-  --gradient-mid: #8b5cf6;
+-  --gradient-end: #f97316;
+-
+-  /* Glassmorphism */
+-  --glass-bg: rgba(20, 20, 20, 0.7);
+-  --glass-border: rgba(255, 255, 255, 0.1);
+-}
+-
++  --ink: #203d32;
++  --green: #245c43;
++  --green-dark: #173f2e;
++  --muted: #58655e;
++  --paper: #fcfcf9;
++  --line: #dbe1d8;
++  --mint: #edf3e8;
++  --lilac: #e9e3f3;
++  --font-sans: Arial, Helvetica, sans-serif;
++  --background: var(--paper);
++  --foreground: var(--ink);
++}
+ @theme inline {
+   --color-background: var(--background);
+   --color-foreground: var(--foreground);
+-  --font-sans: 'Montserrat', var(--font-inter), system-ui, -apple-system, sans-serif;
+-  --font-display: 'Michroma', sans-serif;
+-}
+-
+-/* Dark mode is now permanent */
+-
++  --font-sans: Arial, Helvetica, sans-serif;
++}
++* {
++  box-sizing: border-box;
++}
++html {
++  scroll-behavior: smooth;
++  scroll-padding-top: 24px;
++}
+ body {
+-  background: var(--background);
+-  color: var(--foreground);
+-  font-family: 'Montserrat', var(--font-inter), system-ui, -apple-system, sans-serif;
+-  scroll-behavior: smooth;
+-}
+-
+-.tesla-header {
+-  font-family: 'Michroma', sans-serif;
+-  letter-spacing: 0.2em;
+-  text-transform: uppercase;
+-}
+-
+-.tesla-logo {
+-  font-family: 'Michroma', sans-serif;
+-  letter-spacing: 0.3em;
+-  text-transform: uppercase;
++  margin: 0;
++  background: var(--paper);
++  color: var(--ink);
++  font-family: Arial, Helvetica, sans-serif;
++  font-size: 17px;
++  line-height: 1.6;
++  -webkit-font-smoothing: antialiased;
++}
++h1,
++h2,
++h3,
++p {
++  margin: 0;
++}
++h1,
++h2,
++h3 {
++  text-wrap: balance;
++}
++h1 {
++  font-size: clamp(40px, 4.5vw, 66px);
++  letter-spacing: -0.055em;
++  font-weight: 600;
++  line-height: 1.08;
++}
++h2 {
++  font-size: clamp(29px, 2.6vw, 38px);
++  line-height: 1.18;
++  letter-spacing: -0.04em;
++  font-weight: 600;
++}
++h3 {
++  font-size: 23px;
++  font-weight: 600;
++  letter-spacing: -0.025em;
++  line-height: 1.25;
++}
++a {
++  color: inherit;
++  text-decoration: none;
++}
++p a:not(.button),
++li a,
++dd a {
++  text-decoration: underline;
++  text-underline-offset: 4px;
++}
++a:hover {
++  color: var(--green);
++}
++button,
++input,
++select,
++textarea {
++  font: inherit;
++  color: inherit;
++}
++button,
++a,
++summary,
++select {
++  -webkit-tap-highlight-color: transparent;
++}
++button,
++summary {
++  cursor: pointer;
++}
++button {
++  border: 0;
++}
++a,
++button,
++select,
++textarea,
++summary {
++  touch-action: manipulation;
++}
++a:focus-visible,
++button:focus-visible,
++select:focus-visible,
++textarea:focus-visible,
++summary:focus-visible {
++  outline: 3px solid #7353a2;
++  outline-offset: 5px;
++}
++button:disabled {
++  cursor: not-allowed;
++  opacity: 0.55;
++}
++.icon {
++  flex: none;
++  vertical-align: middle;
++}
++main:focus {
++  outline: none;
++}
++.shell {
++  width: min(1200px, calc(100% - 96px));
++  margin-inline: auto;
++}
++.skip-link {
++  position: absolute;
++  top: 12px;
++  left: 12px;
++  z-index: 100;
++  transform: translateY(-200%);
++  padding: 12px 20px;
++  background: var(--ink);
++  color: white;
++}
++.skip-link:focus {
++  transform: none;
++}
++.site-header {
++  border-bottom: 1px solid var(--line);
++  background: var(--paper);
++}
++.header-inner {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 24px;
++  min-height: 100px;
++}
++.brand {
++  display: inline-flex;
++  gap: 11px;
++  align-items: center;
++  font-size: 22px;
++  font-weight: 600;
++  letter-spacing: -0.6px;
++  line-height: 1.05;
++}
++.brand-mark {
++  width: 43px;
++  height: 48px;
++  border-radius: 13px;
++  background: var(--green);
++  color: #e4efc7;
++  display: grid;
++  place-items: center;
++}
++.brand-mark svg {
++  width: 28px;
++  height: 28px;
++}
++.brand-second {
++  display: block;
++}
++.brand-dot {
++  color: #798e4a;
++}
++.header-inner nav {
++  display: flex;
++  align-items: center;
++  gap: 30px;
++  font-size: 15px;
++  font-weight: 500;
++}
++.header-inner nav > a:not(.button) {
++  display: flex;
++  align-items: center;
++  min-height: 44px;
++}
++.button {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  gap: 12px;
++  min-height: 52px;
++  padding: 13px 24px;
++  background: var(--green);
++  color: white;
++  border: 1px solid var(--green);
++  border-radius: 7px;
++  line-height: 1.35;
++  font-size: 16px;
++  font-weight: 600;
++  text-align: center;
++  transition:
++    background 0.15s ease,
++    color 0.15s ease;
++}
++.button:hover {
++  background: var(--green-dark);
++  color: white;
++}
++.button-small {
++  min-height: 44px;
++  font-size: 14px;
++  padding: 11px 17px;
++}
++.button-secondary {
++  background: transparent;
++  color: var(--green);
++  border-color: #91a08e;
++}
++.button-secondary:hover {
++  background: var(--mint);
++  color: var(--ink);
++}
++.text-link {
++  display: inline-flex;
++  gap: 10px;
++  align-items: center;
++  min-height: 44px;
++  text-decoration: underline;
++  text-underline-offset: 5px;
++  font-size: 16px;
++}
++.eyebrow {
++  font-size: 14px;
++  font-weight: 600;
++  letter-spacing: 0.015em;
++  margin-bottom: 15px;
++  color: var(--green);
++}
++.hero {
++  display: grid;
++  grid-template-columns: 1.25fr 1fr;
++  align-items: center;
++  gap: 65px;
++  padding-block: 62px 54px;
++}
++.hero .eyebrow {
++  display: flex;
++  align-items: center;
++  gap: 9px;
++  margin-bottom: 22px;
++}
++.little-star {
++  font-size: 26px;
+   font-weight: 400;
+-}
+-
+-/* Gradient text utility */
+-.gradient-text {
+-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+-  -webkit-background-clip: text;
+-  -webkit-text-fill-color: transparent;
+-  background-clip: text;
+-}
+-
+-/* Glassmorphism card */
+-.glass-card {
+-  background: var(--glass-bg);
+-  backdrop-filter: blur(10px);
+-  -webkit-backdrop-filter: blur(10px);
+-  border: 1px solid var(--glass-border);
+-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+-}
+-
+-/* Animated gradient background */
+-@keyframes gradient-shift {
+-
+-  0%,
+-  100% {
+-    background-position: 0% 50%;
+-  }
+-
+-  50% {
+-    background-position: 100% 50%;
+-  }
+-}
+-
+-.animated-gradient {
+-  background: linear-gradient(270deg, #10b981, #8b5cf6, #f97316, #10b981);
+-  background-size: 400% 400%;
+-  animation: gradient-shift 15s ease infinite;
+-}
+-
+-/* Floating animation */
+-@keyframes float {
+-
+-  0%,
+-  100% {
+-    transform: translateY(0px);
+-  }
+-
+-  50% {
+-    transform: translateY(-20px);
+-  }
+-}
+-
+-.float-animation {
+-  animation: float 6s ease-in-out infinite;
+-}
+-
+-/* Fade in up animation */
+-@keyframes fadeInUp {
+-  from {
+-    opacity: 0;
+-    transform: translateY(30px);
+-  }
+-
+-  to {
+-    opacity: 1;
+-    transform: translateY(0);
+-  }
+-}
+-
+-.fade-in-up {
+-  animation: fadeInUp 0.8s ease-out forwards;
+-}
+-
+-/* Staggered animation delays */
+-.delay-100 {
+-  animation-delay: 0.1s;
+-}
+-
+-.delay-200 {
+-  animation-delay: 0.2s;
+-}
+-
+-.delay-300 {
+-  animation-delay: 0.3s;
+-}
+-
+-.delay-400 {
+-  animation-delay: 0.4s;
+-}
+-
+-/* Custom scrollbar for premium feel */
+-::-webkit-scrollbar {
+-  width: 8px;
+-}
+-
+-::-webkit-scrollbar-track {
+-  background: var(--background);
+-}
+-
+-::-webkit-scrollbar-thumb {
+-  background: var(--glass-border);
++  line-height: 1;
++}
++.hero h1 {
++  margin-bottom: 24px;
++}
++.good-word {
++  position: relative;
++  white-space: nowrap;
++  color: var(--green);
++}
++.good-word:after {
++  content: "";
++  display: block;
++  position: absolute;
++  bottom: -5px;
++  left: 0;
++  right: 0;
++  height: 7px;
++  background: #bbd984;
++  border-radius: 80% 20% 70% 30%;
++  z-index: -1;
++}
++.hero-description {
++  font-size: 19px;
++  line-height: 1.65;
++  color: var(--muted);
++  margin-bottom: 25px;
++}
++.hero-actions {
++  display: flex;
++  align-items: center;
++  gap: 26px;
++  flex-wrap: wrap;
++}
++.hero-trust {
++  font-size: 13px;
++  margin-top: 18px;
++  color: var(--muted);
++}
++.gift-art {
++  position: relative;
++  max-width: 480px;
++  background: var(--mint);
++  border-radius: 100px 100px 12px 12px;
++  padding: 27px 15px 24px;
++  border: 1px solid #e1e8d9;
++  justify-self: stretch;
++}
++.gift-art svg {
++  display: block;
++  width: 100%;
++  height: auto;
++}
++.art-caption {
++  font-size: 24px;
++  font-weight: 500;
++  letter-spacing: -0.025em;
++  line-height: 1.2;
++  text-align: center;
++}
++.art-note {
++  text-align: center;
++  font-size: 13px;
++  color: var(--muted);
++  margin-top: 4px;
++}
++.section-space {
++  padding-block: 40px 68px;
++  border-top: 1px solid var(--line);
++}
++.section-heading {
++  display: flex;
++  align-items: flex-end;
++  justify-content: space-between;
++  gap: 30px;
++  margin-bottom: 28px;
++}
++.section-heading .eyebrow {
++  margin-bottom: 9px;
++}
++.section-heading > p {
++  color: var(--muted);
++  font-size: 14px;
++  line-height: 1.7;
++}
++.section-heading > p a {
++  color: var(--green);
++}
++.filter-panel {
++  display: grid;
++  grid-template-columns: 1fr 240px;
++  align-items: start;
++  background: var(--mint);
++  border: 1px solid var(--line);
++  border-radius: 9px;
++  padding: 20px 22px;
++  gap: 25px;
++}
++.filter-label {
++  display: block;
++  font-size: 14px;
++  font-weight: 600;
++  margin-bottom: 10px;
++}
++.region-links {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 6px;
++}
++.region-links a {
++  display: flex;
++  align-items: center;
++  min-height: 44px;
++  padding: 9px 14px;
++  border: 1px solid transparent;
++  font-size: 14px;
++  line-height: 1.3;
++  border-radius: 6px;
++}
++.region-links a:hover {
++  background: #dce7d3;
++}
++.region-links .selected {
++  background: var(--green);
++  color: white;
++  border-color: var(--green);
++}
++select {
++  appearance: auto;
++  width: 100%;
++  min-height: 44px;
++  border: 1px solid #8c9a88;
++  background: var(--paper);
++  border-radius: 5px;
++  padding: 10px 32px 10px 12px;
++  line-height: 1.3;
++  font-size: 15px;
++}
++.filter-note {
++  display: flex;
++  gap: 8px;
++  margin-top: 12px;
++  font-size: 13px;
++  color: var(--muted);
++  align-items: flex-start;
++}
++.filter-note .icon {
++  width: 17px;
++  height: 19px;
++  margin-top: 1px;
++}
++.results-meta {
++  display: flex;
++  justify-content: space-between;
++  gap: 20px;
++  padding-block: 28px 16px;
++  font-size: 13px;
++  color: var(--muted);
++}
++.results-meta p {
++  font-weight: 600;
++  color: var(--ink);
++}
++.organisation-grid {
++  display: grid;
++  grid-template-columns: repeat(3, minmax(0, 1fr));
++  gap: 20px;
++}
++.organisation-card {
++  min-width: 0;
++  border: 1px solid var(--line);
++  background: white;
++  padding: 26px 25px 22px;
+   border-radius: 10px;
+-}
+-
+-::-webkit-scrollbar-thumb:hover {
+-  background: rgba(255, 255, 255, 0.2);
+-}
+-
+-/* Ensure sections snap if desired, but here we just want clean flow */
+-/* Standard section behavior */
+-section {
++  display: flex;
++  flex-direction: column;
++  scroll-margin-top: 25px;
++}
++.card-top {
++  display: flex;
++  align-items: center;
++  gap: 12px;
++  margin-bottom: 20px;
++}
++.cause-icon {
++  display: grid;
++  place-items: center;
++  width: 42px;
++  height: 42px;
++  border-radius: 50%;
++  background: #eaf1df;
++  color: var(--green);
++}
++.cause-label {
++  font-size: 13px;
++  font-weight: 600;
++  color: var(--green);
++}
++.category-education .cause-icon {
++  background: #eee8f6;
++  color: #5e4778;
++}
++.category-education .cause-label {
++  color: #5e4778;
++}
++.category-older-people .cause-icon {
++  background: #faebdc;
++  color: #885729;
++}
++.category-older-people .cause-label {
++  color: #885729;
++}
++.category-child-rights .cause-icon {
++  background: #f6e3e8;
++  color: #8a435a;
++}
++.category-child-rights .cause-label {
++  color: #8a435a;
++}
++.category-food-nutrition .cause-icon {
++  background: #e1edf3;
++  color: #36677e;
++}
++.category-food-nutrition .cause-label {
++  color: #36677e;
++}
++.organisation-card h3 {
++  overflow-wrap: anywhere;
++  margin-bottom: 11px;
++}
++.work-location {
++  font-size: 13px;
++  color: var(--muted);
++  display: flex;
++  align-items: flex-start;
++  gap: 6px;
++  margin-bottom: 17px;
++}
++.work-location .icon {
++  width: 15px;
++  height: 17px;
++  margin-top: 1px;
++}
++.card-description {
++  font-size: 16px;
++  line-height: 1.6;
++  margin-bottom: 12px;
++}
++.listing-details {
++  font-size: 14px;
++  margin-block: auto 15px;
++}
++.listing-details summary {
++  min-height: 44px;
++  display: list-item;
++  align-content: center;
++  color: var(--green);
++  text-decoration: underline;
++  text-underline-offset: 4px;
++}
++.listing-details > div {
++  padding-top: 8px;
++}
++.listing-details p {
++  margin-bottom: 12px;
++  overflow-wrap: anywhere;
++}
++.listing-details svg {
++  width: 14px;
++  height: 14px;
++}
++.small {
++  font-size: 13px;
++  color: var(--muted);
++  line-height: 1.6;
++}
++.card-action {
++  border-top: 1px solid var(--line);
++  padding-top: 15px;
++}
++.destination-type {
++  font-size: 12px;
++  display: block;
++  color: var(--muted);
++  margin-bottom: 7px;
++}
++.outbound {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  gap: 12px;
++  min-height: 44px;
++  font-size: 15px;
++  font-weight: 600;
++  line-height: 1.4;
++  color: var(--green);
++}
++.outbound:hover {
++  text-decoration: underline;
++  text-underline-offset: 5px;
++}
++.outbound .icon {
++  width: 17px;
++  height: 17px;
++}
++.directory-footnote {
++  margin-top: 28px;
++  display: flex;
++  align-items: flex-start;
++  gap: 12px;
++  color: var(--muted);
++  font-size: 14px;
++  max-width: 850px;
++}
++.directory-footnote .icon {
++  width: 19px;
++  margin-top: 2px;
++}
++.how-section {
++  background: var(--mint);
++  border-top: 1px solid var(--line);
++  border-bottom: 1px solid var(--line);
++  padding-block: 65px;
++}
++.steps {
++  display: grid;
++  grid-template-columns: repeat(3, minmax(0, 1fr));
++  gap: 50px;
++  padding: 0;
++  margin: 35px 0 0;
++  list-style: none;
++}
++.steps li {
++  border-top: 1px solid #b6c5b0;
++  padding-top: 20px;
++}
++.step-number {
++  font-size: 15px;
++  color: var(--green);
++  display: block;
++  margin-bottom: 22px;
++}
++.steps h3 {
++  font-size: 22px;
++  margin-bottom: 12px;
++}
++.steps p {
++  font-size: 16px;
++  color: var(--muted);
++}
++.message-banner {
++  display: flex;
++  align-items: center;
++  gap: 27px;
++  margin-block: 64px;
++  padding: 40px;
++  background: var(--lilac);
++  border-radius: 10px;
++}
++.message-banner .eyebrow {
++  color: #5e4778;
++}
++.message-banner h2 {
++  font-size: 29px;
++}
++.message-banner p:not(.eyebrow) {
++  font-size: 15px;
++  color: #565164;
++  margin-top: 14px;
++  max-width: 520px;
++}
++.message-banner > .button {
++  margin-left: auto;
++  flex: none;
++}
++.message-banner-icon {
++  display: grid;
++  place-items: center;
++  align-self: flex-start;
++  width: 56px;
++  height: 56px;
++  background: #f8f5ff;
++  border-radius: 50%;
++  flex: none;
++  color: #5e4778;
++}
++.message-banner-icon .icon {
++  width: 30px;
++  height: 30px;
++}
++.thoughtful {
++  display: grid;
++  grid-template-columns: 1fr 1.4fr;
++  gap: 70px;
++  margin-block: 60px 80px;
++}
++.thoughtful ul {
++  list-style: none;
++  margin: 0;
++  padding: 0;
++}
++.thoughtful li {
++  display: flex;
++  flex-direction: column;
++  border-top: 1px solid var(--line);
++  padding: 17px 0;
++}
++.thoughtful li strong {
++  font-size: 16px;
++  font-weight: 600;
++}
++.thoughtful li span {
++  font-size: 15px;
++  color: var(--muted);
++  margin-top: 4px;
++}
++.site-footer {
++  border-top: 1px solid var(--line);
++  padding-block: 38px 24px;
++}
++.footer-top {
++  display: flex;
++  align-items: flex-start;
++  justify-content: space-between;
++  gap: 25px;
++}
++.footer-top p {
++  font-size: 13px;
++  color: var(--muted);
++  margin-top: 15px;
++}
++.footer-top nav {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 12px 25px;
++  font-size: 14px;
++  max-width: 550px;
++}
++.footer-top nav a {
++  min-height: 44px;
++  display: flex;
++  align-items: center;
++}
++.footer-bottom {
++  display: flex;
++  justify-content: space-between;
++  gap: 25px;
++  border-top: 1px solid var(--line);
++  padding-top: 19px;
++  margin-top: 28px;
++  font-size: 12px;
++  color: var(--muted);
++}
++.back-link {
++  display: inline-flex;
++  align-items: center;
++  min-height: 44px;
++  font-size: 14px;
++  color: var(--muted);
++  margin-bottom: 24px;
++}
++.region-hero {
++  padding-block: 30px 32px;
++}
++.region-hero h1 {
++  font-size: clamp(38px, 4.2vw, 60px);
++  max-width: 830px;
++}
++.region-description {
++  max-width: 800px;
++  font-size: 18px;
++  color: var(--muted);
++  margin-top: 22px;
++}
++.region-trust {
++  display: flex;
++  gap: 10px;
++  align-items: flex-start;
++  font-size: 14px;
++  color: var(--green);
++  margin-top: 22px;
++}
++.region-trust .icon {
++  width: 18px;
++  margin-top: 1px;
++}
++.region-tip {
++  font-size: 14px;
++  background: var(--lilac);
++  padding: 16px 20px;
++  border-radius: 7px;
++  margin-top: 28px;
++  max-width: 950px;
++  color: #504660;
++}
++.region-tip a {
++  display: inline-block;
++  text-decoration: underline;
++  text-underline-offset: 4px;
++  margin-left: 4px;
++}
++.regional-next {
++  border-top: 1px solid var(--line);
++  padding-block: 40px 65px;
++}
++.regional-next h2 {
++  font-size: 30px;
++}
++.regional-next p {
++  margin-block: 14px 24px;
++  color: var(--muted);
++}
++.prose-page {
++  max-width: 820px;
++  padding-block: 65px 90px;
++}
++.prose-page h1 {
++  margin-bottom: 26px;
++}
++.lead {
++  font-size: 21px;
++  line-height: 1.65;
++  color: var(--muted);
++}
++.prose-page section {
++  margin-top: 45px;
++}
++.prose-page h2 {
++  font-size: 29px;
++  margin-bottom: 18px;
++}
++.prose-page section p {
++  margin-block: 13px;
++}
++.prose-page ul {
++  padding-left: 23px;
++}
++.prose-page li {
++  padding-block: 7px;
++}
++.about-founder {
++  margin-top: 50px;
++  display: grid;
++  grid-template-columns: 130px 1fr;
++  gap: 30px;
++  background: var(--mint);
++  padding: 30px;
++  border-radius: 9px;
++}
++.about-founder h2 {
++  font-size: 24px;
++}
++.about-founder p:last-child {
++  font-size: 16px;
++}
++.founder-monogram {
++  height: 140px;
+   position: relative;
++  display: grid;
++  place-items: center;
++  background: var(--lilac);
++  border-radius: 65px 65px 8px 8px;
++  font-size: 70px;
++  line-height: 1;
++}
++.founder-monogram span {
++  position: absolute;
++  bottom: 8px;
++  right: 10px;
++  font-size: 40px;
++  color: var(--green);
++}
++.notice {
++  background: var(--mint);
++  padding: 24px;
++  border-radius: 8px;
++}
++.definitions {
++  display: grid;
++  grid-template-columns: 180px 1fr;
++  gap: 16px 24px;
++}
++.definitions dt {
++  font-weight: 600;
++}
++.definitions dd {
++  margin: 0;
++  color: var(--muted);
++}
++.source-list {
++  list-style: none;
++  padding: 0 !important;
++}
++.source-list li {
++  display: flex;
++  justify-content: space-between;
++  gap: 20px;
++  border-bottom: 1px solid var(--line);
++  padding-block: 12px;
++  font-size: 16px;
++}
++.source-list span {
++  font-size: 13px;
++  color: var(--muted);
++  flex: none;
++  align-self: center;
++}
++.message-page {
++  padding-block: 30px 70px;
++}
++.page-intro {
++  max-width: 760px;
++  margin-bottom: 34px;
++}
++.page-intro p:not(.eyebrow) {
++  font-size: 19px;
++  color: var(--muted);
++  margin-top: 24px;
++}
++.composer {
++  display: grid;
++  grid-template-columns: 1fr 1.7fr;
++  gap: 40px;
++  background: var(--mint);
++  padding: 32px;
++  border: 1px solid var(--line);
++  border-radius: 10px;
++}
++.composer-controls label,
++.editor-label label {
++  font-weight: 600;
++  display: block;
++  font-size: 16px;
++  margin-bottom: 10px;
++}
++.optional {
++  font-size: 13px;
++  font-weight: 400;
++}
++.composer-controls .small {
++  margin-block: 12px 18px;
++}
++.composer-controls select {
++  max-width: 100%;
++  font-size: 14px;
++}
++.editor-label {
++  display: flex;
++  justify-content: space-between;
++  gap: 20px;
++}
++.editor-label > span {
++  font-size: 13px;
++  color: var(--muted);
++}
++textarea {
++  display: block;
++  resize: vertical;
++  min-height: 320px;
++  line-height: 1.7;
+   width: 100%;
+-}
+-
+-/* Glow effect */
+-.glow {
+-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3),
+-    0 0 40px rgba(139, 92, 246, 0.2),
+-    0 0 60px rgba(249, 115, 22, 0.1);
+-}
+-
+-/* Smooth transitions */
+-* {
+-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+-  transition-duration: 150ms;
+-}+  border: 1px solid #84947b;
++  border-radius: 6px;
++  background: white;
++  padding: 20px;
++  font-size: 16px;
++}
++.message-editor > .small {
++  margin-block: 13px 20px;
++}
++.composer-actions {
++  display: flex;
++  gap: 12px;
++  align-items: center;
++  flex-wrap: wrap;
++}
++.text-button {
++  min-height: 44px;
++  padding: 8px 2px;
++  background: transparent;
++  color: var(--green);
++  font-size: 14px;
++  text-decoration: underline;
++  text-underline-offset: 4px;
++}
++.message-status {
++  min-height: 52px;
++  font-size: 14px;
++  margin-top: 15px;
++}
++.message-reminder {
++  font-size: 14px;
++  color: var(--muted);
++  margin-top: 24px;
++}
++.empty-state {
++  text-align: center;
++  border: 1px solid var(--line);
++  padding: 40px 20px;
++  border-radius: 10px;
++}
++.empty-state > .icon {
++  width: 35px;
++  height: 35px;
++  margin-bottom: 15px;
++}
++.empty-state h3 {
++  margin-bottom: 12px;
++}
++.empty-state p {
++  color: var(--muted);
++  margin-bottom: 23px;
++}
++.empty-state > a {
++  display: block;
++  min-height: 44px;
++  margin-top: 15px;
++  text-decoration: underline;
++}
++.not-found {
++  padding-block: 70px 100px;
++  min-height: 60vh;
++}
++.not-found p:not(.eyebrow) {
++  margin-block: 25px;
++}
++.not-found .text-link {
++  margin-left: 20px;
++}
++@media (min-width: 1441px) {
++  .hero {
++    padding-block: 70px;
++  }
++  .hero h1 {
++    font-size: 68px;
++  }
++}
++@media (max-width: 1100px) {
++  .shell {
++    width: calc(100% - 64px);
++  }
++  .header-inner nav {
++    gap: 20px;
++  }
++  .nav-how {
++    display: none !important;
++  }
++  .hero {
++    gap: 35px;
++  }
++  .hero h1 {
++    font-size: 54px;
++  }
++  .hero-description {
++    font-size: 17px;
++  }
++  .filter-panel {
++    grid-template-columns: 1fr 205px;
++    gap: 15px;
++  }
++  .region-links {
++    gap: 3px;
++  }
++  .region-links a {
++    padding-inline: 9px;
++  }
++  .organisation-card {
++    padding: 22px 20px;
++  }
++  .message-banner {
++    gap: 20px;
++    padding: 30px;
++  }
++  .message-banner-icon {
++    display: none;
++  }
++  .message-banner h2 {
++    font-size: 27px;
++  }
++  .footer-top nav {
++    max-width: 440px;
++  }
++  .composer {
++    gap: 25px;
++    padding: 25px;
++  }
++}
++@media (max-width: 850px) {
++  .header-inner {
++    min-height: 88px;
++  }
++  .header-inner nav {
++    gap: 20px;
++  }
++  .nav-message {
++    display: none !important;
++  }
++  .hero {
++    gap: 24px;
++    grid-template-columns: 1.25fr 1fr;
++    padding-block: 42px;
++  }
++  .hero h1 {
++    font-size: 45px;
++  }
++  .hero .eyebrow {
++    font-size: 12px;
++  }
++  .hero-actions {
++    gap: 14px;
++  }
++  .hero-actions > .button {
++    padding-inline: 17px;
++  }
++  .hero-trust {
++    font-size: 12px;
++  }
++  .gift-art {
++    padding: 24px 8px 20px;
++    border-radius: 80px 80px 10px 10px;
++  }
++  .art-caption {
++    font-size: 21px;
++  }
++  .hero-description {
++    font-size: 16px;
++  }
++  .organisation-grid {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++  }
++  .filter-panel {
++    grid-template-columns: 1fr;
++  }
++  .cause-filter {
++    max-width: 320px;
++  }
++  .section-heading > p {
++    max-width: 240px;
++  }
++  .steps {
++    gap: 25px;
++  }
++  .steps h3 {
++    font-size: 20px;
++  }
++  .message-banner {
++    flex-wrap: wrap;
++  }
++  .message-banner > .button {
++    margin-left: 0;
++  }
++  .thoughtful {
++    gap: 30px;
++  }
++  .footer-top {
++    flex-wrap: wrap;
++  }
++  .footer-top nav {
++    max-width: none;
++  }
++  .composer {
++    grid-template-columns: 1fr;
++  }
++  .composer-controls {
++    max-width: 500px;
++  }
++  .definitions {
++    grid-template-columns: 140px 1fr;
++  }
++}
++@media (max-width: 600px) {
++  body {
++    font-size: 16px;
++  }
++  .shell {
++    width: calc(100% - 40px);
++  }
++  .header-inner {
++    min-height: 80px;
++    gap: 12px;
++  }
++  .brand {
++    font-size: 19px;
++    gap: 8px;
++  }
++  .brand-mark {
++    width: 33px;
++    height: 40px;
++    border-radius: 10px;
++  }
++  .brand-mark svg {
++    width: 23px;
++    height: 23px;
++  }
++  .header-inner nav {
++    gap: 14px;
++    font-size: 13px;
++  }
++  .hero {
++    display: block;
++    padding-block: 34px 30px;
++  }
++  .hero .eyebrow {
++    font-size: 12px;
++    margin-bottom: 16px;
++    gap: 7px;
++  }
++  .little-star {
++    font-size: 22px;
++  }
++  .hero h1 {
++    font-size: 46px;
++    margin-bottom: 18px;
++  }
++  .hero-description {
++    font-size: 17px;
++    margin-bottom: 20px;
++  }
++  .desktop-break {
++    display: none;
++  }
++  .hero-actions {
++    gap: 18px;
++  }
++  .hero-actions > .button {
++    min-height: 48px;
++    padding: 12px 16px;
++    font-size: 14px;
++  }
++  .hero-actions > .text-link {
++    font-size: 14px;
++  }
++  .hero-trust {
++    font-size: 12px;
++    max-width: 300px;
++    margin-top: 15px;
++    line-height: 1.5;
++  }
++  .gift-art {
++    display: none;
++  }
++  .section-space {
++    padding-block: 27px 40px;
++  }
++  .section-heading {
++    display: block;
++    margin-bottom: 22px;
++  }
++  .section-heading > p {
++    max-width: none;
++    margin-top: 14px;
++    font-size: 13px;
++  }
++  .section-heading > p br {
++    display: none;
++  }
++  .section-heading > p a {
++    display: block;
++    margin-top: 4px;
++  }
++  .section-heading h2 {
++    font-size: 30px;
++  }
++  .eyebrow {
++    font-size: 12px;
++    margin-bottom: 10px;
++  }
++  .filter-panel {
++    padding: 16px;
++    gap: 18px;
++  }
++  .filter-label {
++    font-size: 13px;
++  }
++  .region-links {
++    gap: 5px;
++  }
++  .region-links a {
++    font-size: 13px;
++    padding: 9px 12px;
++    border-color: #c7d1c0;
++    background: #f7f9f2;
++  }
++  .cause-filter {
++    max-width: none;
++  }
++  .filter-note {
++    font-size: 12px;
++    margin-top: 12px;
++    line-height: 1.5;
++  }
++  .results-meta {
++    padding-block: 24px 14px;
++    gap: 10px;
++    font-size: 12px;
++  }
++  .organisation-grid {
++    grid-template-columns: 1fr;
++    gap: 16px;
++  }
++  .organisation-card {
++    padding: 23px;
++  }
++  .card-top {
++    margin-bottom: 16px;
++  }
++  .organisation-card h3 {
++    font-size: 24px;
++  }
++  .card-description {
++    font-size: 16px;
++  }
++  .work-location {
++    font-size: 13px;
++  }
++  .outbound {
++    font-size: 15px;
++  }
++  .directory-footnote {
++    font-size: 13px;
++    gap: 9px;
++    margin-top: 23px;
++  }
++  .how-section {
++    padding-block: 36px;
++  }
++  .how-section .text-link {
++    margin-top: 12px;
++  }
++  .steps {
++    grid-template-columns: 1fr;
++    gap: 25px;
++    margin-top: 25px;
++  }
++  .steps li {
++    display: grid;
++    grid-template-columns: 35px 1fr;
++    gap: 10px 15px;
++  }
++  .step-number {
++    grid-row: span 2;
++    margin: 0;
++  }
++  .steps h3 {
++    margin: 0;
++    font-size: 21px;
++  }
++  .steps p {
++    grid-column: 2;
++    font-size: 16px;
++  }
++  .message-banner {
++    padding: 25px;
++    gap: 22px;
++    margin-block: 35px;
++  }
++  .message-banner h2 {
++    font-size: 25px;
++  }
++  .message-banner h2 br {
++    display: none;
++  }
++  .thoughtful {
++    grid-template-columns: 1fr;
++    gap: 25px;
++    margin-block: 40px;
++  }
++  .thoughtful h2 br {
++    display: none;
++  }
++  .thoughtful li span {
++    font-size: 15px;
++  }
++  .footer-top nav {
++    gap: 3px 20px;
++    display: grid;
++    grid-template-columns: 1fr 1fr;
++    font-size: 13px;
++  }
++  .footer-bottom {
++    display: block;
++    font-size: 12px;
++  }
++  .footer-bottom p + p {
++    margin-top: 9px;
++  }
++  .region-hero {
++    padding-block: 20px 27px;
++  }
++  .back-link {
++    margin-bottom: 20px;
++  }
++  .region-hero h1 {
++    font-size: 39px;
++  }
++  .region-description {
++    font-size: 17px;
++    margin-top: 20px;
++  }
++  .region-trust {
++    font-size: 13px;
++  }
++  .region-tip {
++    font-size: 13px;
++    padding: 16px;
++    margin-top: 20px;
++  }
++  .regional-next {
++    padding-block: 30px 42px;
++  }
++  .regional-next h2 {
++    font-size: 27px;
++  }
++  .prose-page {
++    padding-block: 35px 50px;
++  }
++  .prose-page h1 {
++    font-size: 41px;
++  }
++  .lead {
++    font-size: 18px;
++  }
++  .prose-page h2 {
++    font-size: 26px;
++  }
++  .prose-page section {
++    margin-top: 32px;
++  }
++  .about-founder {
++    padding: 23px;
++    grid-template-columns: 1fr;
++    gap: 20px;
++    margin-top: 30px;
++  }
++  .founder-monogram {
++    width: 85px;
++    height: 100px;
++    font-size: 55px;
++  }
++  .founder-monogram span {
++    font-size: 28px;
++  }
++  .definitions {
++    grid-template-columns: 1fr;
++    gap: 6px;
++  }
++  .definitions dd {
++    margin-bottom: 14px;
++  }
++  .source-list li {
++    display: block;
++  }
++  .source-list li > span {
++    display: block;
++    font-size: 12px;
++  }
++  .page-intro h1 {
++    font-size: 40px;
++  }
++  .page-intro p:not(.eyebrow) {
++    font-size: 17px;
++  }
++  .message-page {
++    padding-block: 20px 40px;
++  }
++  .composer {
++    padding: 19px;
++    gap: 25px;
++  }
++  .composer-controls select {
++    font-size: 14px;
++  }
++  .composer-actions .button {
++    font-size: 14px;
++    padding: 12px 16px;
++  }
++  .editor-label label {
++    font-size: 15px;
++  }
++  textarea {
++    padding: 14px;
++    min-height: 400px;
++    font-size: 16px;
++  }
++  .message-status {
++    min-height: 60px;
++  }
++  .not-found {
++    padding-block: 40px 60px;
++  }
++  .not-found h1 {
++    font-size: 40px;
++  }
++}
++@media (max-width: 359px) {
++  .shell {
++    width: calc(100% - 32px);
++  }
++  .brand {
++    font-size: 17px;
++  }
++  .header-inner nav {
++    font-size: 12px;
++    gap: 10px;
++  }
++  .hero h1 {
++    font-size: 40px;
++  }
++  .hero-actions {
++    gap: 10px;
++  }
++  .hero-actions .text-link {
++    font-size: 13px;
++  }
++  .region-links a {
++    padding-inline: 9px;
++    font-size: 12px;
++  }
++  .organisation-card {
++    padding: 20px;
++  }
++  .results-meta {
++    font-size: 11px;
++  }
++  .page-intro h1,
++  .region-hero h1,
++  .prose-page h1 {
++    font-size: 35px;
++  }
++  .composer {
++    padding: 15px;
++  }
++  .footer-top nav {
++    gap: 3px 14px;
++  }
++}
++@media (prefers-reduced-motion: reduce) {
++  html {
++    scroll-behavior: auto;
++  }
++  *,
++  *::before,
++  *::after {
++    animation: none !important;
++    transition: none !important;
++  }
++}
++@media print {
++  .site-header,
++  .site-footer,
++  .hero-actions,
++  .composer-actions {
++    display: none;
++  }
++  body {
++    background: white;
++    color: black;
++  }
++  .shell {
++    width: 100%;
++  }
++  .organisation-grid {
++    grid-template-columns: repeat(2, minmax(0, 1fr));
++  }
++  .organisation-card {
++    break-inside: avoid;
++  }
++  .outbound:after {
++    content: " (" attr(href) ")";
++    font-size: 10px;
++    overflow-wrap: anywhere;
++  }
++  .gift-art {
++    display: none;
++  }
++}
++@media (min-width: 851px) {
++  .hero {
++    padding-block: 42px 38px;
++  }
++  .gift-art {
++    max-width: 400px;
++    justify-self: end;
++  }
++  .hero-copy {
++    padding-block: 5px;
++  }
++}
++@media(max-width:600px){.hero{padding-top:28px}.hero h1{font-size:clamp(32px,10vw,42px)}.directory-intro{display:none}.section-heading>p br{display:none}.section-heading>p{margin-top:10px}}
+--- a/app/india/page.tsx
++++ b/app/india/page.tsx
+@@ -1,33 +1,10 @@
+-import CharityCard from '@/components/CharityCard';
+-import { charitiesIndia } from '@/data/charities';
+-
+-export default function India() {
+-  return (
+-    <div className="space-y-16 -mx-8">
+-      {/* Immersive Hero Section */}
+-      <section className="relative w-full h-[60vh] flex flex-col items-center justify-center overflow-hidden">
+-        <div
+-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105"
+-          style={{ backgroundImage: 'url(/images/india-hero.jpg)' }}
+-        ></div>
+-        <div className="absolute inset-0 bg-black/40"></div>
+-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
+-
+-        <div className="relative z-10 text-center space-y-6 px-4">
+-          <h1 className="tesla-header text-5xl md:text-8xl text-white drop-shadow-2xl tracking-[0.4em]">
+-            INDIA
+-          </h1>
+-          <p className="text-white/80 max-w-2xl mx-auto font-montserrat font-light tracking-[0.2em] text-xs md:text-sm leading-relaxed">
+-            Empower communities and protect nature in India.
+-          </p>
+-        </div>
+-      </section>
+-
+-      <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+-        {charitiesIndia.map((charity) => (
+-          <CharityCard key={charity.name} charity={charity} />
+-        ))}
+-      </div>
+-    </div>
+-  );
++import RegionPage from "@/components/RegionPage";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Birthday Giving in India",
++  "Explore organisations working in India on education, older people’s care, child rights, school meals and the environment. Give on their own websites.",
++  "/india",
++);
++export default function Page() {
++  return <RegionPage region="india" />;
+ }
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -1,32 +1,35 @@
+-import './globals.css';
+-import type { Metadata } from 'next';
+-import { Inter, Montserrat, Michroma } from 'next/font/google';
+-import Navbar from '@/components/Navbar';
+-import Footer from '@/components/Footer';
+-
+-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+-const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' });
+-const michroma = Michroma({ weight: '400', subsets: ['latin'], variable: '--font-michroma' });
+-
++import "./globals.css";
++import type { Metadata } from "next";
++import Navbar from "@/components/Navbar";
++import Footer from "@/components/Footer";
++import { isIndexable, siteUrl } from "@/lib/site";
+ export const metadata: Metadata = {
+-  title: 'Celebrate for Change',
+-  description: 'Turn your birthday into real-world impact.',
++  metadataBase: new URL(siteUrl),
++  title: {
++    default: "Celebrate for Change | Birthday giving guide",
++    template: "%s | Celebrate for Change",
++  },
++  description:
++    "Find an organisation to support for your birthday, learn where it works, and give on its own website. A student-built celebration-giving guide.",
++  robots: { index: isIndexable, follow: isIndexable },
+ };
+-
+ export default function RootLayout({
+   children,
+ }: {
+   children: React.ReactNode;
+ }) {
+   return (
+-    <html lang="en" className="dark">
+-      <body className={`${inter.variable} ${montserrat.variable} ${michroma.variable} min-h-screen flex flex-col`} style={{ fontFamily: 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif' }}>
++    <html lang="en">
++      <body>
++        <a className="skip-link" href="#main-content">
++          Skip to content
++        </a>
+         <Navbar />
+-        <main className="flex-grow w-full">
++        <main id="main-content" tabIndex={-1}>
+           {children}
+         </main>
+         <Footer />
+       </body>
+     </html>
+   );
+-}+}
+--- a/app/message/page.tsx
++++ b/app/message/page.tsx
+@@ -0,0 +1,51 @@
++import Link from "next/link";
++import MessageComposer from "@/components/MessageComposer";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Write a birthday giving message",
++  "Make an editable birthday message asking friends to support an organisation instead of buying gifts. Copy it or open your device’s share sheet.",
++  "/message",
++);
++export default function MessagePage() {
++  return (
++    <div className="shell message-page">
++      <Link href="/#missions" className="back-link">
++        ← Find an organisation
++      </Link>
++      <div className="page-intro">
++        <p className="eyebrow">An invitation, in your own words</p>
++        <h1>
++          Ask for a little good
++          <br />
++          instead of gifts.
++        </h1>
++        <p>
++          Start with a suggestion, add your own voice, and share it when you’re
++          ready. No campaign, account or donation total to manage.
++        </p>
++      </div>
++      <MessageComposer />
++      <noscript>
++        <div className="notice">
++          <h2>Copy a simple starter</h2>
++          <p>
++            Your company is the best birthday gift. If you’d like to give
++            something too, consider supporting a cause you care about instead of
++            buying me a present. Find ideas at
++            https://www.celebrateforchange.org/ and give on the organisation’s
++            own website. There’s no pressure to give — I’m happy to celebrate
++            with you.
++          </p>
++          <p>
++            You can select and copy this text manually. Enable JavaScript for
++            the editable message controls.
++          </p>
++        </div>
++      </noscript>
++      <p className="message-reminder">
++        Celebrate for Change does not send invitations, collect donations or
++        track whether anyone gives.
++      </p>
++    </div>
++  );
++}
+--- a/app/methodology/page.tsx
++++ b/app/methodology/page.tsx
+@@ -0,0 +1,132 @@
++import Link from "next/link";
++import { charities } from "@/data/charities";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "How listings are selected and checked",
++  "Understand the guide’s source checks, selection limits, work-location labels and outgoing link types. These are not independent impact evaluations.",
++  "/methodology",
++);
++export default function Methodology() {
++  return (
++    <div className="shell prose-page">
++      <p className="eyebrow">Know what you’re choosing</p>
++      <h1>
++        A guide, with
++        <br />
++        clear limits.
++      </h1>
++      <p className="lead">
++        An official link is a useful starting point. It isn’t proof of impact.
++        Here’s what our checks do — and what remains your decision.
++      </p>
++      <section>
++        <h2>How organisations are selected</h2>
++        <p>
++          This is a small editorial directory, inherited from the original
++          student project. It includes organisations working on the environment,
++          education, older people’s support, child rights and school meals. It
++          is not a comprehensive list, an open application programme or a
++          ranking.
++        </p>
++        <p>
++          The original selection did not document a comparative effectiveness
++          assessment. We have retained its legitimate destinations and made
++          their purpose and scope clearer. We do not label listings “verified”
++          or “high-impact”.
++        </p>
++      </section>
++      <section>
++        <h2>What we checked</h2>
++        <p>
++          On 21 October 2026, we reviewed official web sources for each
++          listing’s public name, description of its work, work locations and
++          outgoing destination type. The source is available in each card’s
++          “Source & giving notes”.
++        </p>
++        <p>
++          WWF-UK’s donation link opens a choice of giving options. No payments
++          or final donation forms were submitted during the checks. Web content
++          can change after a review.
++        </p>
++        <ul>
++          <li>We did not make payments or test transaction completion.</li>
++          <li>
++            We did not independently audit impact, finances, registrations or
++            operating costs.
++          </li>
++          <li>
++            We did not verify donor eligibility, tax treatment, currencies or
++            payment methods for individual visitors.
++          </li>
++          <li>
++            We do not receive payment confirmations or measure how much anyone
++            gives.
++          </li>
++        </ul>
++      </section>
++      <section>
++        <h2>What the locations mean</h2>
++        <p>
++          Locations describe where the listed work takes place. They do not
++          establish where an organisation is registered or which donors it can
++          accept. “International” includes work across multiple countries or
++          ocean and river projects.
++        </p>
++        <p>
++          An organisation may appear in more than one guide. A gift might
++          support broader work than the programme that interests you, so check
++          the organisation’s allocation terms.
++        </p>
++      </section>
++      <section>
++        <h2>Read the outgoing action</h2>
++        <dl className="definitions">
++          <dt>Donation page</dt>
++          <dd>
++            A giving page on the organisation’s website. It may direct you to
++            its payment provider.
++          </dd>
++          <dt>Official website</dt>
++          <dd>
++            A homepage where you can learn about programmes and choose a way to
++            help.
++          </dd>
++          <dt>Gift membership</dt>
++          <dd>
++            A paid membership offered as a gift. Read its duration and terms.
++          </dd>
++          <dt>Certificate shop</dt>
++          <dd>
++            A product purchase, with its own purchase or subscription terms.
++          </dd>
++        </dl>
++      </section>
++      <section>
++        <h2>Official sources in this guide</h2>
++        <ul className="source-list">
++          {charities.map((c) => (
++            <li key={c.id}>
++              <a href={c.source} rel="noreferrer">
++                {c.name} <span aria-hidden="true">↗</span>
++              </a>
++              <span>{c.actionType}</span>
++            </li>
++          ))}
++        </ul>
++      </section>
++      <section id="corrections">
++        <h2>Corrections & questions</h2>
++        <p>
++          A direct correction contact for this student project is not yet
++          available. Until it is available, use the official source on a listing
++          to check current information, and contact the organisation directly
++          about its programmes or payments.
++        </p>
++        <p>
++          Please do not send payment details through this guide.{" "}
++          <Link href="/disclaimer">Read the disclaimer and privacy notes</Link>.
++        </p>
++      </section>
++    </div>
++  );
++}
+--- a/app/not-found.tsx
++++ b/app/not-found.tsx
+@@ -0,0 +1,17 @@
++import Link from "next/link";
++export default function NotFound() {
++  return (
++    <div className="shell not-found">
++      <p className="eyebrow">404 · Page not found</p>
++      <h1>
++        Let’s get you
++        <br />
++        back to something good.
++      </h1>
++      <p>This address doesn’t match a page in the guide.</p>
++      <Link className="button" href="/#missions">
++        Browse organisations →
++      </Link>
++    </div>
++  );
++}
+--- a/app/opengraph-image.tsx
++++ b/app/opengraph-image.tsx
+@@ -0,0 +1,43 @@
++import { ImageResponse } from "next/og";
++export const alt =
++  "Celebrate for Change — find a cause, choose an organisation, give on its own website.";
++export const size = { width: 1200, height: 630 };
++export const contentType = "image/png";
++export default function Image() {
++  return new ImageResponse(
++    <div
++      style={{
++        width: "100%",
++        height: "100%",
++        display: "flex",
++        flexDirection: "column",
++        justifyContent: "space-between",
++        padding: "70px",
++        background: "#edf2e9",
++        color: "#214e3c",
++        fontFamily: "sans-serif",
++      }}
++    >
++      <div style={{ display: "flex", fontSize: 30 }}>Celebrate for Change.</div>
++      <div
++        style={{
++          display: "flex",
++          fontSize: 88,
++          fontWeight: 700,
++          letterSpacing: -4,
++          lineHeight: 1.05,
++          maxWidth: 950,
++        }}
++      >
++        Your birthday. A little more good.
++      </div>
++      <div style={{ display: "flex", fontSize: 27 }}>
++        Find an organisation. Give on its own website.
++      </div>
++      <div style={{ display: "flex", fontSize: 20 }}>
++        A student-built guide. We don’t collect or process donations.
++      </div>
++    </div>,
++    size,
++  );
++}
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -1,174 +1,137 @@
+-'use client';
+-
+-import Link from 'next/link';
+-import { useState } from 'react';
+-
++import Link from "next/link";
++import Directory from "@/components/Directory";
++import GiftIllustration from "@/components/GiftIllustration";
++import Icon from "@/components/Icon";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Birthday giving guide",
++  "Make your celebration a reason to give. Browse organisations by cause and where they work, then support them on their own websites.",
++  "/",
++);
+ export default function Home() {
+-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+-
+-  const handleShare = (link: string, index: number) => {
+-    const url = `${window.location.origin}${link}`;
+-    navigator.clipboard.writeText(url);
+-    setCopiedIndex(index);
+-    setTimeout(() => setCopiedIndex(null), 2000);
+-  };
+-
+-  const regions = [
+-    {
+-      name: "UNITED STATES",
+-      link: "/usa",
+-      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80",
+-      description: "Turning birthdays into support for classrooms, environmental protection, and food security.",
+-      cta: "View Causes →"
+-    },
+-    {
+-      name: "INDIA",
+-      link: "/india",
+-      image: "/images/india_landing_new.png",
+-      description: "Empowering rural communities and supporting elderly citizens through direct, verified giving.",
+-      cta: "View Causes →"
+-    },
+-    {
+-      name: "UNITED KINGDOM",
+-      link: "/uk",
+-      image: "/images/uk_wildlife.jpg",
+-      description: "Protecting wildlife and supporting healthcare initiatives across the UK.",
+-      cta: "View Causes →"
+-    }
+-  ];
+-
+   return (
+-    <div className="flex flex-col w-full bg-black">
+-      {/* Hero Section */}
+-      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+-        {/* Intense Tesla-style Gradient Background */}
+-        <div className="absolute inset-0 z-0">
+-          <div className="absolute inset-0 animated-gradient opacity-20 blur-3xl scale-110"></div>
+-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black z-10"></div>
+-          <div className="absolute inset-0 bg-radial-gradient from-transparent via-black to-black opacity-60 z-10"></div>
++    <>
++      <section className="hero shell">
++        <div className="hero-copy">
++          <p className="eyebrow">
++            <span className="little-star" aria-hidden="true">
++              ✳
++            </span>{" "}
++            A celebration can be a beginning
++          </p>
++          <h1>
++            Your birthday.
++            <br />A little more <span className="good-word">good.</span>
++          </h1>
++          <p className="hero-description">
++            Find a cause you care about. Choose an organisation.
++            <br className="desktop-break" /> Give on its own website.
++          </p>
++          <div className="hero-actions">
++            <a href="#missions" className="button">
++              Find an organisation <Icon name="arrow" />
++            </a>
++            <a href="#how-it-works" className="text-link">
++              How it works <span aria-hidden="true">↗</span>
++            </a>
++          </div>
++          <p className="hero-trust">
++            A student-built guide. We don’t collect or process donations.
++          </p>
+         </div>
+-
+-        {/* Content */}
+-        <div className="relative text-center space-y-12 max-w-5xl mx-auto z-10 px-4">
+-          <div className="space-y-4 fade-in-up">
+-            <div className="tesla-logo text-emerald-500 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.8em] font-light mb-4 text-center">
+-              ESTABLISHED 2024
++        <GiftIllustration />
++      </section>
++      <Directory />
++      <section className="how-section" id="how-it-works">
++        <div className="shell">
++          <div className="section-heading">
++            <div>
++              <p className="eyebrow">Simple, from the start</p>
++              <h2>A thoughtful gift, in three steps.</h2>
+             </div>
+-            <h1 className="tesla-header text-4xl md:text-8xl leading-tight float-animation">
+-              CELEBRATE <span className="gradient-text block mt-2">FOR CHANGE</span>
+-            </h1>
+-          </div>
+-
+-          <p className="text-sm md:text-lg text-white/50 max-w-2xl mx-auto fade-in-up delay-100 font-montserrat tracking-[0.3em] leading-relaxed text-center">
+-            Turning personal celebrations into <br className="hidden md:block" /> direct social impact.
+-          </p>
+-
+-          <div className="flex flex-col md:flex-row gap-6 justify-center pt-12 fade-in-up delay-200">
+-            <Link
+-              href="#missions"
+-              className="px-6 py-3 md:px-16 md:py-5 bg-white text-black tesla-header text-[12px] tracking-[0.3em] hover:bg-emerald-500 transition-all duration-500 transform active:scale-95 shadow-2xl"
+-            >
+-              View Causes
+-            </Link>
+-            <Link
+-              href="#how-it-works"
+-              className="px-6 py-3 md:px-16 md:py-5 bg-transparent border border-white/20 text-white tesla-header text-[12px] tracking-[0.3em] hover:bg-white/10 transition-all duration-500 backdrop-blur-md"
+-            >
+-              How It Works
++            <Link href="/about" className="text-link">
++              Meet the guide <Icon name="arrow" />
+             </Link>
+           </div>
+-        </div>
+-
+-        {/* Animated Scroll Indicator */}
+-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-4 animate-bounce opacity-40">
+-          <div className="w-px h-12 bg-gradient-to-b from-emerald-500 to-transparent"></div>
++          <ol className="steps">
++            <li>
++              <span className="step-number">01</span>
++              <h3>Start with what matters.</h3>
++              <p>
++                Pick a cause and where you’d like the work to happen. Read a few
++                listings to find a fit.
++              </p>
++            </li>
++            <li>
++              <span className="step-number">02</span>
++              <h3>Take a closer look.</h3>
++              <p>
++                Visit the official source. Check the programme, payment terms
++                and who can give before deciding.
++              </p>
++            </li>
++            <li>
++              <span className="step-number">03</span>
++              <h3>Give, or invite a friend.</h3>
++              <p>
++                Support the organisation on its own website. If you like, ask
++                friends to give instead of gifts.
++              </p>
++            </li>
++          </ol>
+         </div>
+       </section>
+-
+-      {/* How it Works - Minimalist Grid */}
+-      <section id="how-it-works" className="w-full py-40 bg-black">
+-        <div className="max-w-6xl mx-auto px-8 space-y-32">
+-          <h2 className="tesla-header text-2xl md:text-3xl tracking-[0.4em] text-white text-center">
+-            FROM CELEBRATION <span className="gradient-text">TO IMPACT</span>
++      <section className="shell message-banner">
++        <div className="message-banner-icon">
++          <Icon name="gift" />
++        </div>
++        <div>
++          <p className="eyebrow">Your birthday, your words</p>
++          <h2>
++            “Your company is the best gift.
++            <br />
++            But if you’d like to give…”
+           </h2>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+-            {[
+-              { id: '01', title: 'SELECT COUNTRY', desc: 'Choose where you want your birthday to make a difference.' },
+-              { id: '02', title: 'CHOOSE A CAUSE', desc: 'Pick a verified nonprofit aligned with what matters to you.' },
+-              { id: '03', title: 'DIRECT IMPACT', desc: 'Donate directly to the organization — no middlemen, full transparency.' }
+-            ].map((step) => (
+-              <div key={step.id} className="space-y-8 group border-t border-white/10 pt-10 hover:border-emerald-500/50 transition-colors">
+-                <div className="tesla-header text-6xl text-white/40 group-hover:text-emerald-500 transition-colors duration-500">
+-                  {step.id}
+-                </div>
+-                <h3 className="tesla-header text-sm text-white tracking-[0.3em]">{step.title}</h3>
+-                <p className="text-[10px] text-white/60 font-montserrat tracking-[0.2em] leading-loose">
+-                  {step.desc}
+-                </p>
+-              </div>
+-            ))}
+-          </div>
++          <p>
++            A simple message you can make your own and share when you’re ready.
++          </p>
+         </div>
++        <Link href="/message" className="button">
++          Write your message <Icon name="arrow" />
++        </Link>
+       </section>
+-
+-      {/* Region Slideshow - Tesla Style Full Bleed */}
+-      <section id="missions" className="w-full">
+-        {regions.map((region, idx) => (
+-          <div
+-            key={region.name}
+-            className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-between py-32 group border-b border-white/5"
+-          >
+-            {/* Background Image with Zoom */}
+-            <div
+-              className="absolute inset-0 z-0 grayscale transition-all duration-[2000ms] group-hover:grayscale-0 group-hover:scale-105 opacity-40 group-hover:opacity-60"
+-              style={{
+-                backgroundImage: `url(${region.image})`,
+-                backgroundSize: 'cover',
+-                backgroundPosition: 'center'
+-              }}
+-            ></div>
+-
+-            {/* Edge Glow Overlays */}
+-            <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-black to-transparent z-10"></div>
+-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black to-transparent z-10"></div>
+-
+-            {/* Content Top */}
+-            <div className="relative z-20 text-center space-y-6 px-4 fade-in-up">
+-              <h2 className="tesla-header text-4xl md:text-7xl text-white tracking-[0.2em] md:tracking-[0.5em] group-hover:text-emerald-400 transition-colors duration-700">
+-                {region.name}
+-              </h2>
+-              <p className="text-white/40 text-[10px] md:text-xs font-montserrat tracking-[0.4em] max-w-xl mx-auto leading-loose">
+-                {region.description}
+-              </p>
+-            </div>
+-
+-            {/* Action Bar */}
+-            <div className="relative z-20 flex flex-col md:flex-row gap-4 w-full max-w-md px-8 fade-in-up delay-200">
+-              <Link
+-                href={region.link}
+-                className="flex-[3] bg-white text-black py-5 rounded-none tesla-header text-[12px] tracking-[0.2em] transition-all duration-500 hover:bg-emerald-500 transform active:scale-95 text-center shadow-2xl"
+-              >
+-                {region.cta}
+-              </Link>
+-              <button
+-                onClick={() => handleShare(region.link, idx)}
+-                className="flex-1 bg-white/5 hover:bg-white/10 text-white py-5 rounded-none tesla-header transition-all duration-500 backdrop-blur-md border border-white/10 transform active:scale-95 flex items-center justify-center gap-2 group/share"
+-                aria-label="Share"
+-              >
+-                {copiedIndex === idx ? (
+-                  <div className="flex items-center gap-1.5 text-emerald-400">
+-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+-                    <span className="text-[9px] tracking-[0.2em] font-bold">COPIED</span>
+-                  </div>
+-                ) : (
+-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60 group-hover/share:opacity-100 transition-opacity"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" /></svg>
+-                )}
+-              </button>
+-            </div>
+-          </div>
+-        ))}
++      <section className="shell thoughtful">
++        <div>
++          <p className="eyebrow">Before you give</p>
++          <h2>
++            A good match starts
++            <br />
++            with a few questions.
++          </h2>
++        </div>
++        <ul>
++          <li>
++            <strong>Does the work matter to you?</strong>
++            <span>
++              Look for a specific programme you can explain in your own words.
++            </span>
++          </li>
++          <li>
++            <strong>What are you paying for?</strong>
++            <span>
++              A donation, a membership and a product purchase have different
++              terms.
++            </span>
++          </li>
++          <li>
++            <strong>Are you comfortable with the details?</strong>
++            <span>
++              Read current reports, payment terms and privacy information on the
++              official site.
++            </span>
++          </li>
++        </ul>
+       </section>
+-    </div>
++    </>
+   );
+-}+}
+--- a/app/robots.ts
++++ b/app/robots.ts
+@@ -0,0 +1,10 @@
++import type { MetadataRoute } from "next";
++import { isIndexable, siteUrl } from "@/lib/site";
++export default function robots(): MetadataRoute.Robots {
++  return isIndexable
++    ? {
++        rules: { userAgent: "*", allow: "/" },
++        sitemap: `${siteUrl}/sitemap.xml`,
++      }
++    : { rules: { userAgent: "*", disallow: "/" } };
++}
+--- a/app/sitemap.ts
++++ b/app/sitemap.ts
+@@ -0,0 +1,17 @@
++import type { MetadataRoute } from "next";
++import { isIndexable, siteUrl } from "@/lib/site";
++export default function sitemap(): MetadataRoute.Sitemap {
++  return isIndexable
++    ? [
++        "",
++        "/india",
++        "/usa",
++        "/uk",
++        "/global",
++        "/about",
++        "/methodology",
++        "/message",
++        "/disclaimer",
++      ].map((path) => ({ url: `${siteUrl}${path}` }))
++    : [];
++}
+--- a/app/uk/page.tsx
++++ b/app/uk/page.tsx
+@@ -1,33 +1,10 @@
+-import CharityCard from '@/components/CharityCard';
+-import { charitiesUK } from '@/data/charities';
+-
+-export default function UK() {
+-  return (
+-    <div className="space-y-16 -mx-8">
+-      {/* Immersive Hero Section */}
+-      <section className="relative w-full h-[60vh] flex flex-col items-center justify-center overflow-hidden">
+-        <div
+-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105"
+-          style={{ backgroundImage: 'url(/images/uk_bg.png)' }}
+-        ></div>
+-        <div className="absolute inset-0 bg-black/40"></div>
+-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
+-
+-        <div className="relative z-10 text-center space-y-6 px-4">
+-          <h1 className="tesla-header text-5xl md:text-8xl text-white drop-shadow-2xl tracking-[0.4em]">
+-            UNITED KINGDOM
+-          </h1>
+-          <p className="text-white/80 max-w-2xl mx-auto font-montserrat font-light tracking-[0.2em] text-xs md:text-sm leading-relaxed">
+-            Contribute to impactful charities based in the United Kingdom.
+-          </p>
+-        </div>
+-      </section>
+-
+-      <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+-        {charitiesUK.map((charity) => (
+-          <CharityCard key={charity.name} charity={charity} />
+-        ))}
+-      </div>
+-    </div>
+-  );
++import RegionPage from "@/components/RegionPage";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Birthday Giving in the United Kingdom",
++  "Explore teacher development, older people’s support and conservation with clear work locations and links to organisations’ official giving pages.",
++  "/uk",
++);
++export default function Page() {
++  return <RegionPage region="uk" />;
+ }
+--- a/app/usa/page.tsx
++++ b/app/usa/page.tsx
+@@ -1,33 +1,10 @@
+-import CharityCard from '@/components/CharityCard';
+-import { charitiesUSA } from '@/data/charities';
+-
+-export default function USA() {
+-  return (
+-    <div className="space-y-16 -mx-8">
+-      {/* Immersive Hero Section */}
+-      <section className="relative w-full h-[60vh] flex flex-col items-center justify-center overflow-hidden">
+-        <div
+-          className="absolute inset-0 bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105"
+-          style={{ backgroundImage: 'url(/images/usa_bg.png)' }}
+-        ></div>
+-        <div className="absolute inset-0 bg-black/40"></div>
+-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60"></div>
+-
+-        <div className="relative z-10 text-center space-y-6 px-4">
+-          <h1 className="tesla-header text-5xl md:text-8xl text-white drop-shadow-2xl tracking-[0.4em]">
+-            USA
+-          </h1>
+-          <p className="text-white/80 max-w-2xl mx-auto font-montserrat font-light tracking-[0.2em] text-xs md:text-sm leading-relaxed">
+-            Support verified nonprofits making a difference in the US and globally.
+-          </p>
+-        </div>
+-      </section>
+-
+-      <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
+-        {charitiesUSA.map((charity) => (
+-          <CharityCard key={charity.name} charity={charity} />
+-        ))}
+-      </div>
+-    </div>
+-  );
++import RegionPage from "@/components/RegionPage";
++import { pageMetadata } from "@/lib/site";
++export const metadata = pageMetadata(
++  "Birthday Giving in the United States",
++  "Find organisations supporting US classrooms, educational opportunities and older adults. Compare their work and continue to their official websites.",
++  "/usa",
++);
++export default function Page() {
++  return <RegionPage region="usa" />;
+ }
+--- a/components/CharityCard.tsx
++++ b/components/CharityCard.tsx
+@@ -1,99 +1,66 @@
+-'use client';
+-
+-import { Charity } from '@/data/charities';
+-import { useState } from 'react';
+-
+-// Enhanced color mapping for categories with gradients
+-const categoryStyles = {
+-  'Environment': {
+-    badge: 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white',
+-    gradient: 'from-emerald-50 to-teal-50',
+-    darkGradient: 'from-emerald-950 to-teal-950'
+-  },
+-  'Education': {
+-    badge: 'bg-gradient-to-r from-blue-400 to-indigo-500 text-white',
+-    gradient: 'from-blue-50 to-indigo-50',
+-    darkGradient: 'from-blue-950 to-indigo-950'
+-  },
+-  'Elderly Support': {
+-    badge: 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black',
+-    gradient: 'from-amber-50 to-yellow-50',
+-    darkGradient: 'from-amber-950 to-yellow-950'
+-  },
+-};
+-
+-// New categoryColors mapping for the updated badge style
+-const categoryColors = {
+-  'Environment': 'text-emerald-400',
+-  'Education': 'text-blue-400',
+-  'Elderly Support': 'text-amber-400',
+-};
+-
+-export default function CharityCard({ charity }: { charity: Charity }) {
+-  const [copied, setCopied] = useState(false);
+-
+-  const handleShare = () => {
+-    navigator.clipboard.writeText(charity.url);
+-    setCopied(true);
+-    setTimeout(() => setCopied(false), 2000);
+-  };
+-
++import Link from "next/link";
++import type { Charity } from "@/data/charities";
++import { categorySlug } from "@/data/charities";
++import Icon from "./Icon";
++const icons = {
++  Environment: "leaf",
++  Education: "book",
++  "Older people": "heart",
++  "Child rights": "child",
++  "Food & nutrition": "bowl",
++} as const;
++export default function CharityCard({ charity: c }: { charity: Charity }) {
+   return (
+-    <div className="group relative overflow-hidden bg-black border border-white/10 transition-all duration-700 hover:shadow-[0_0_50px_rgba(251,191,36,0.1)] min-h-[400px] flex flex-col">
+-      {/* Background Image with Zoom and Enhanced Opacity */}
+-      {charity.image && (
+-        <>
+-          <div
+-            className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-[2000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
+-            style={{ backgroundImage: `url(${charity.image})` }}
+-          ></div>
+-          {/* Multi-layer gradient overlay for depth and readability */}
+-          <div className="absolute inset-0 z-1 bg-gradient-to-t from-black via-black/20 to-transparent transition-opacity duration-700 group-hover:opacity-60"></div>
+-          <div className="absolute inset-0 z-1 bg-gradient-to-b from-black/60 via-transparent to-black/40"></div>
+-        </>
+-      )}
+-
+-      {/* Content Overlay */}
+-      <div className="relative z-10 flex-grow p-10 flex flex-col transition-all duration-500">
+-        <div className="flex justify-between items-start mb-8">
+-          <span className={`px-5 py-2 text-[10px] tesla-header ${categoryColors[charity.category]} bg-black/60 shadow-2xl backdrop-blur-xl border border-white/10`}>
+-            {charity.category}
+-          </span>
++    <article
++      className={`organisation-card category-${categorySlug(c.category)}`}
++      id={c.id}
++    >
++      <div className="card-top">
++        <span className="cause-icon">
++          <Icon name={icons[c.category]} />
++        </span>
++        <span className="cause-label">{c.category}</span>
++      </div>
++      <h3>{c.name}</h3>
++      <p className="work-location">
++        <Icon name="globe" />
++        {c.worksIn}
++      </p>
++      <p className="card-description">{c.description}</p>
++      <details className="listing-details">
++        <summary>Source & giving notes</summary>
++        <div>
++          <p>
++            <a href={c.source} rel="noreferrer">
++              {c.name}: official source <Icon name="external" />
++            </a>
++          </p>
++          <p>
++            {c.note ||
++              "Check the organisation’s eligibility, fees and one-time or recurring payment options before giving."}
++          </p>
++          <p className="small">
++            Source reviewed{" "}
++            {new Date(`${c.checked}T00:00:00Z`).toLocaleDateString("en-GB", {
++              day: "numeric",
++              month: "long",
++              year: "numeric",
++              timeZone: "UTC",
++            })}
++            .{" "}
++            {c.checkNote ||
++              "Identity, description and destination type reviewed; payments and impact not independently tested."}{" "}
++            <Link href="/methodology">About these checks</Link>.
++          </p>
+         </div>
+-
+-        <h3 className="text-xl md:text-2xl tesla-header mb-6 tracking-[0.1em] text-white drop-shadow-lg group-hover:text-emerald-400 transition-colors duration-500 leading-tight">
+-          {charity.name}
+-        </h3>
+-
+-        <p className="text-white text-xs font-light leading-loose mb-10 flex-grow line-clamp-4 font-montserrat tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-opacity duration-500">
+-          {charity.description || "Support this verified organization making real-world impact through your donation."}
+-        </p>
+-
+-        <div className="flex gap-4">
+-          <a
+-            href={charity.url}
+-            target="_blank"
+-            rel="noopener noreferrer"
+-            className="flex-[2] py-5 text-center tesla-header text-[12px] bg-white text-black transition-all duration-500 hover:bg-emerald-500 hover:text-black transform group-hover:translate-y-[-4px] active:scale-95 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+-          >
+-            Donate Now →
+-          </a>
+-          <button
+-            onClick={handleShare}
+-            className="flex-1 py-5 text-center tesla-header bg-white/5 text-white border border-white/10 transition-all duration-500 hover:bg-white/10 active:scale-95 backdrop-blur-md flex items-center justify-center gap-2 group/share"
+-            aria-label="Share"
+-          >
+-            {copied ? (
+-              <div className="flex items-center gap-1 text-emerald-400">
+-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+-                <span className="text-[8px] tracking-[0.1em] font-bold uppercase">Copied</span>
+-              </div>
+-            ) : (
+-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60 group-hover/share:opacity-100 transition-opacity"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" /></svg>
+-            )}
+-          </button>
+-        </div>
++      </details>
++      <div className="card-action">
++        <span className="destination-type">{c.actionType} · external site</span>
++        <a href={c.url} rel="noreferrer" className="outbound">
++          {c.action}
++          <Icon name="external" />
++        </a>
+       </div>
+-    </div>
++    </article>
+   );
+-}+}
+--- a/components/Directory.tsx
++++ b/components/Directory.tsx
+@@ -0,0 +1,144 @@
++"use client";
++import { useEffect, useState } from "react";
++import Link from "next/link";
++import {
++  charities,
++  categories,
++  categorySlug,
++  regions,
++  type Region,
++} from "@/data/charities";
++import CharityCard from "./CharityCard";
++import Icon from "./Icon";
++export default function Directory({ region = "all" }: { region?: Region }) {
++  const [cause, setCause] = useState("all");
++  useEffect(() => {
++    const sync = () => {
++      const value =
++        new URLSearchParams(window.location.search).get("cause") || "all";
++      setCause(
++        categories.some((c) => categorySlug(c) === value) ? value : "all",
++      );
++    };
++    sync();
++    window.addEventListener("popstate", sync);
++    return () => window.removeEventListener("popstate", sync);
++  }, []);
++  function changeCause(value: string) {
++    setCause(value);
++    const url = new URL(window.location.href);
++    if (value === "all") url.searchParams.delete("cause");
++    else url.searchParams.set("cause", value);
++    window.history.pushState(null, "", url);
++  }
++  const results = charities.filter(
++    (c) =>
++      (region === "all" || c.regions.includes(region)) &&
++      (cause === "all" || categorySlug(c.category) === cause),
++  );
++  return (
++    <section
++      className="directory shell section-space"
++      id="missions"
++      aria-labelledby="directory-title"
++    >
++      <div className="section-heading">
++        <div>
++          <p className="eyebrow">Find your kind of good</p>
++          <h2 id="directory-title">What matters to you?</h2>
++        </div>
++        <p>
++          <span className="directory-intro">A place to start, a choice that’s yours.</span>
++          <br />
++          <Link href="/methodology">
++            How we select and check listings <span aria-hidden="true">↗</span>
++          </Link>
++        </p>
++      </div>
++      <div className="filter-panel">
++        <div className="region-filter">
++          <span className="filter-label" id="location-label">
++            Where organisations work
++          </span>
++          <nav className="region-links" aria-labelledby="location-label">
++            {regions.map((r) => (
++              <Link
++                key={r.id}
++                href={`${r.href}${cause === "all" ? "" : `?cause=${cause}`}#missions`}
++                className={region === r.id ? "selected" : ""}
++                aria-current={region === r.id ? "page" : undefined}
++              >
++                {r.label}
++              </Link>
++            ))}
++          </nav>
++        </div>
++        <div className="cause-filter">
++          <label className="filter-label" htmlFor="cause">
++            Choose a cause
++          </label>
++          <select
++            id="cause"
++            value={cause}
++            onChange={(e) => changeCause(e.target.value)}
++          >
++            <option value="all">All causes</option>
++            {categories.map((c) => (
++              <option key={c} value={categorySlug(c)}>
++                {c}
++              </option>
++            ))}
++          </select>
++        </div>
++      </div>
++      <p className="filter-note">
++        <Icon name="globe" />
++        Locations describe the work, not where you can donate from. Check
++        eligibility on the organisation’s site.
++      </p>
++      <noscript>
++        <p className="notice">
++          All causes are shown below. Regional links work without JavaScript;
++          enable it to filter by cause.
++        </p>
++      </noscript>
++      <div className="results-meta">
++        <p role="status" aria-live="polite">
++          {results.length}{" "}
++          {results.length === 1 ? "organisation" : "organisations"}
++          {cause !== "all"
++            ? ` · ${categories.find((c) => categorySlug(c) === cause)}`
++            : ""}
++        </p>
++        <span>Listed without rankings</span>
++      </div>
++      {results.length ? (
++        <div className="organisation-grid">
++          {results.map((c) => (
++            <CharityCard key={c.id} charity={c} />
++          ))}
++        </div>
++      ) : (
++        <div className="empty-state">
++          <Icon name="leaf" />
++          <h3>No listings for this combination yet.</h3>
++          <p>This small guide doesn’t cover every cause in every location.</p>
++          <button className="button" onClick={() => changeCause("all")}>
++            Show all causes here
++          </button>
++          <Link href={`/?cause=${cause}#missions`}>
++            Look in all locations <span aria-hidden="true">→</span>
++          </Link>
++        </div>
++      )}
++      <div className="directory-footnote">
++        <Icon name="external" />
++        <p>
++          You’ll continue to the organisation’s own site. Celebrate for Change
++          does not collect or process donations, sell gifts, or confirm
++          payments.
++        </p>
++      </div>
++    </section>
++  );
++}
+--- a/components/Footer.tsx
++++ b/components/Footer.tsx
+@@ -1,23 +1,34 @@
+-import Link from 'next/link';
+-
++import Link from "next/link";
++import Icon from "./Icon";
+ export default function Footer() {
+   return (
+-    <footer className="w-full bg-black border-t border-white/5 py-24 mt-auto relative overflow-hidden">
+-      {/* Subtle bottom glow */}
+-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent blur-sm"></div>
+-
+-      <div className="max-w-6xl mx-auto px-8 flex flex-col items-center gap-8 text-center">
+-        <div className="space-y-4">
+-          <p className="font-montserrat text-[10px] tracking-[0.2em] text-white/60 font-light max-w-md mx-auto leading-loose">
+-            © 2026 Celebrate for Change <br />
+-            A global social impact initiative focused on transparent giving.
+-          </p>
++    <footer className="site-footer">
++      <div className="shell footer-top">
++        <div>
++          <Link className="brand" href="/">
++            <span className="brand-mark">
++              <Icon name="gift" />
++            </span>
++            <span>
++              Celebrate<span className="brand-second">for Change.</span>
++            </span>
++          </Link>
++          <p>A little celebration. A thoughtful way to give.</p>
+         </div>
+-
+-        <div className="flex items-center justify-center gap-6 font-montserrat text-[10px] tracking-[0.2em] text-white/80">
+-          <Link href="/disclaimer" className="hover:text-emerald-500 transition-all duration-300">Disclaimer</Link>
+-        </div>
++        <nav aria-label="Footer">
++          <Link href="/about">About the guide</Link>
++          <Link href="/methodology">How listings are checked</Link>
++          <Link href="/disclaimer">Disclaimer & privacy</Link>
++          <Link href="/methodology#corrections">Corrections</Link>
++        </nav>
++      </div>
++      <div className="shell footer-bottom">
++        <p>A student-built guide by Rignesh.</p>
++        <p>
++          Donations happen on organisations’ websites. We don’t collect or
++          process them.
++        </p>
+       </div>
+     </footer>
+   );
+-}+}
+--- a/components/GiftIllustration.tsx
++++ b/components/GiftIllustration.tsx
+@@ -0,0 +1,62 @@
++export default function GiftIllustration() {
++  return (
++    <div className="gift-art" aria-hidden="true">
++      <div className="art-caption">
++        Good things
++        <br />
++        start with giving.
++      </div>
++      <svg viewBox="0 0 420 300" fill="none">
++        <ellipse cx="210" cy="265" rx="133" ry="13" fill="#d2d3c7" />
++        <path
++          d="M103 154h214v102H103z"
++          fill="#bdda7b"
++          stroke="#205744"
++          strokeWidth="2"
++        />
++        <path d="M103 154h214v30H103z" fill="#a9c96a" />
++        <path
++          d="M92 133h236v36H92z"
++          fill="#d1e7a1"
++          stroke="#205744"
++          strokeWidth="2"
++        />
++        <path d="M194 133h32v123h-32z" fill="#205744" />
++        <path
++          d="M208 132c-88-12-103-66-66-67 28-1 51 33 66 67Z"
++          fill="#d4c3ef"
++          stroke="#205744"
++          strokeWidth="2"
++        />
++        <path
++          d="M211 132c86-13 102-65 65-67-27-2-52 34-65 67Z"
++          fill="#d4c3ef"
++          stroke="#205744"
++          strokeWidth="2"
++        />
++        <path d="M212 130c5-50 4-64 14-94" stroke="#205744" strokeWidth="3" />
++        <path
++          d="M217 86c-37-1-45-19-44-38 28 0 43 12 44 38ZM223 62c29 0 43-18 41-38-28 1-43 15-41 38Z"
++          fill="#205744"
++        />
++        <path
++          d="m307 191 28 30-32 27-28-31 32-26Z"
++          fill="#fff"
++          stroke="#205744"
++          strokeWidth="2"
++        />
++        <circle cx="303" cy="204" r="3" fill="#205744" />
++        <path d="m307 192-49-28" stroke="#205744" strokeWidth="2" />
++        <path
++          d="m56 102 9-15M350 72l12 8M349 159h16M65 205l-9 11"
++          stroke="#205744"
++          strokeWidth="3"
++          strokeLinecap="round"
++        />
++        <circle cx="84" cy="63" r="5" fill="#b497d4" />
++        <circle cx="353" cy="218" r="6" fill="#b497d4" />
++      </svg>
++      <div className="art-note">Less stuff. More meaning.</div>
++    </div>
++  );
++}
+--- a/components/Icon.tsx
++++ b/components/Icon.tsx
+@@ -0,0 +1,91 @@
++export default function Icon({
++  name,
++  className = "",
++}: {
++  name:
++    | "arrow"
++    | "external"
++    | "leaf"
++    | "book"
++    | "heart"
++    | "child"
++    | "bowl"
++    | "gift"
++    | "copy"
++    | "check"
++    | "globe";
++  className?: string;
++}) {
++  const paths = {
++    arrow: (
++      <>
++        <path d="M4 12h15M13 6l6 6-6 6" />
++      </>
++    ),
++    external: (
++      <>
++        <path d="M14 4h6v6M20 4l-9 9M10 4H4v16h16v-6" />
++      </>
++    ),
++    leaf: (
++      <>
++        <path d="M20 3C9 2 3 6 4 13c1 6 9 7 13 2 3-4 3-8 3-12ZM4 21 15 10" />
++      </>
++    ),
++    book: (
++      <>
++        <path d="M12 5v16M12 5C8 2 4 3 2 4v15c4-2 7-1 10 2 3-3 6-4 10-2V4c-2-1-6-2-10 1Z" />
++      </>
++    ),
++    heart: (
++      <path d="M20 5c-3-3-7-1-8 1-2-3-6-4-9-1-5 5 3 12 9 16 6-4 13-11 8-16Z" />
++    ),
++    child: (
++      <>
++        <circle cx="12" cy="5" r="3" />
++        <path d="m3 10 9 3 9-3M12 13v4m-5 5 5-5 5 5" />
++      </>
++    ),
++    bowl: (
++      <>
++        <path d="M3 12h18c0 6-4 9-9 9s-9-3-9-9ZM8 3c-3 3 3 4 0 7M15 2c-3 3 3 4 0 7" />
++      </>
++    ),
++    gift: (
++      <>
++        <path d="M3 10h18v4H3zM5 14v7h14v-7M12 10v11" />
++        <path d="M12 10C0 10 6-2 12 10c6-12 12 0 0 0Z" />
++      </>
++    ),
++    copy: (
++      <>
++        <rect x="8" y="8" width="12" height="13" rx="2" />
++        <path d="M15 8V3H3v13h5" />
++      </>
++    ),
++    check: <path d="m4 12 5 5L20 6" />,
++    globe: (
++      <>
++        <circle cx="12" cy="12" r="9" />
++        <ellipse cx="12" cy="12" rx="4" ry="9" />
++        <path d="M3 12h18" />
++      </>
++    ),
++  };
++  return (
++    <svg
++      className={`icon ${className}`}
++      width="22"
++      height="22"
++      viewBox="0 0 24 24"
++      fill="none"
++      stroke="currentColor"
++      strokeWidth="1.6"
++      strokeLinecap="round"
++      strokeLinejoin="round"
++      aria-hidden="true"
++    >
++      {paths[name]}
++    </svg>
++  );
++}
+--- a/components/MessageComposer.tsx
++++ b/components/MessageComposer.tsx
+@@ -0,0 +1,126 @@
++"use client";
++import { useRef, useState } from "react";
++import { charities } from "@/data/charities";
++import { siteUrl } from "@/lib/site";
++import Icon from "./Icon";
++import { copyMessage, shareMessage, type ShareOutcome } from "@/lib/sharing";
++function makeMessage(id: string) {
++  const c = charities.find((c) => c.id === id);
++  return `Your company is the best birthday gift. If you’d like to give something too, I’d love you to consider ${c ? `supporting ${c.name}` : "a cause you care about"} instead of buying me a present.\n\n${c ? `${c.actionType === "Gift membership" ? "You can explore its gift memberships" : c.actionType === "Certificate shop" ? "You can explore its plastic certificates" : c.actionType === "Official website" ? "You can learn more and choose how to help" : "You can give directly"} on its own website: ${c.url}` : `You can find ideas at ${siteUrl} and give on the organisation’s own website.`}\n\nThere’s no pressure to give — I’m just happy to celebrate with you.`;
++}
++export default function MessageComposer() {
++  const [organisation, setOrganisation] = useState("");
++  const [message, setMessage] = useState(makeMessage(""));
++  const [status, setStatus] = useState("");
++  const [busy, setBusy] = useState(false);
++  const field = useRef<HTMLTextAreaElement>(null);
++  function selectText() {
++    field.current?.focus();
++    field.current?.select();
++    setStatus(
++      "Text selected. Use your device’s Copy command, then paste it wherever you like.",
++    );
++  }
++  function showOutcome(outcome: ShareOutcome) {
++    if (outcome === 'select') selectText();
++    setStatus({
++      copied: 'Copied. Paste it into your invitation or a message when you’re ready.',
++      shared: 'Share sheet closed. This guide does not track whether a message was sent.',
++      cancelled: 'Sharing cancelled. Your message is still here.',
++      select: 'Automatic sharing or copying is unavailable. Your text is selected; use your device’s Copy command.',
++    }[outcome]);
++  }
++  async function copy() {
++    setBusy(true);
++    showOutcome(await copyMessage(message, navigator));
++    setBusy(false);
++  }
++  async function share() {
++    setStatus("Choose an app in your device’s share sheet. You can also select and copy the text manually.");
++    setBusy(true);
++    showOutcome(await shareMessage(message, navigator));
++    setBusy(false);
++  }
++  return (
++    <div className="composer">
++      <div className="composer-controls">
++        <label htmlFor="organisation">
++          Start with an organisation{" "}
++          <span className="optional">(optional)</span>
++        </label>
++        <select
++          id="organisation"
++          value={organisation}
++          onChange={(e) => setOrganisation(e.target.value)}
++        >
++          <option value="">Let friends choose a cause</option>
++          {charities.map((c) => (
++            <option key={c.id} value={c.id}>
++              {c.name} · {c.actionType}
++            </option>
++          ))}
++        </select>
++        <p className="small">Using a new starter replaces the text below.</p>
++        <button
++          type="button"
++          className="button button-secondary"
++          onClick={() => {
++            setMessage(makeMessage(organisation));
++            setStatus("Starter added. Edit it to sound like you.");
++          }}
++        >
++          Use this starter <Icon name="arrow" />
++        </button>
++      </div>
++      <div className="message-editor">
++        <div className="editor-label">
++          <label htmlFor="birthday-message">Your message</label>
++          <span>Edit freely</span>
++        </div>
++        <textarea
++          ref={field}
++          id="birthday-message"
++          value={message}
++          onChange={(e) => {
++            setMessage(e.target.value);
++            setStatus("");
++          }}
++          rows={10}
++          aria-describedby="message-privacy"
++          spellCheck
++        />
++        <p id="message-privacy" className="small">
++          Your draft stays in this page’s memory and clears when you reload.
++          Nothing is sent until you use your own messaging app.
++        </p>
++        <div className="composer-actions">
++          <button
++            className="button"
++            disabled={!message.trim() || busy}
++            onClick={copy}
++          >
++            <Icon name="copy" />
++            Copy message
++          </button>
++          <button
++            className="button button-secondary"
++            disabled={!message.trim() || busy}
++            onClick={share}
++          >
++            Share message <Icon name="external" />
++          </button>
++          <button
++            className="text-button"
++            onClick={selectText}
++            disabled={!message.trim()}
++          >
++            Select text
++          </button>
++        </div>
++        <p className="message-status" role="status" aria-live="polite">
++          {status}
++        </p>
++      </div>
++    </div>
++  );
++}
+--- a/components/Navbar.tsx
++++ b/components/Navbar.tsx
+@@ -1,29 +1,31 @@
+-import Link from 'next/link';
+-
++import Link from "next/link";
++import Icon from "./Icon";
+ export default function Navbar() {
+   return (
+-    <nav className="w-full bg-black/90 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
+-      {/* Subtle bottom border glow */}
+-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent"></div>
+-
+-      <div className="max-w-6xl mx-auto px-8 h-24 flex items-center justify-between">
+-        <Link href="/" className="group flex flex-col items-start text-white">
+-          <span className="tesla-logo text-[12px] md:text-xl tracking-[0.5em] transition-all duration-700 group-hover:tracking-[0.8em] group-hover:text-emerald-400">
+-            CELEBRATE <span className="text-emerald-500 font-normal">FOR</span> CHANGE
++    <header className="site-header">
++      <div className="shell header-inner">
++        <Link href="/" className="brand" aria-label="Celebrate for Change home">
++          <span className="brand-mark">
++            <Icon name="gift" />
++          </span>
++          <span>
++            Celebrate
++            <span className="brand-second">
++              for Change<span className="brand-dot">.</span>
++            </span>
+           </span>
+         </Link>
+-        <div className="flex items-center space-x-4 md:space-x-12">
+-          <Link href="/about" className="tesla-header text-[10px] tracking-[0.3em] text-white/50 hover:text-emerald-500 transition-all duration-300">
+-            ABOUT
++        <nav aria-label="Main navigation">
++          <Link href="/#missions">Find a cause</Link>
++          <Link href="/#how-it-works" className="nav-how">
++            How it works
+           </Link>
+-          <Link
+-            href="/#missions"
+-            className="px-4 py-2 md:px-8 md:py-3 bg-white text-black tesla-header text-[10px] tracking-[0.2em] hover:bg-emerald-500 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-emerald-500/40"
+-          >
+-            Choose a Cause
++          <Link href="/about">About</Link>
++          <Link href="/message" className="button button-small nav-message">
++            Make a birthday message <Icon name="arrow" />
+           </Link>
+-        </div>
++        </nav>
+       </div>
+-    </nav>
++    </header>
+   );
+-}+}
+--- a/components/RegionPage.tsx
++++ b/components/RegionPage.tsx
+@@ -0,0 +1,75 @@
++import Link from "next/link";
++import Directory from "./Directory";
++import Icon from "./Icon";
++import type { Region } from "@/data/charities";
++const content = {
++  india: {
++    title: "A celebration with India in mind.",
++    label: "Birthday giving in India",
++    description:
++      "Explore learning, older people’s care, children’s rights, school meals and environmental work in India. Each listing explains the work and links to the organisation’s own site.",
++    tip: "Supporting work in India doesn’t necessarily mean a giving page accepts every donor. Read the organisation’s guidance for domestic and international contributions.",
++  },
++  usa: {
++    title: "Give your birthday a local connection.",
++    label: "Birthday giving in the United States",
++    description:
++      "Explore classroom resources, educational opportunities and support for older adults in the United States. Decide whether you want to support a specific classroom, a local programme or a national organisation.",
++    tip: "Looking for The Ocean Cleanup, Planet Wild or Plastic Fischer? Their international work now appears in the International guide, with gift and product links labelled separately.",
++  },
++  uk: {
++    title: "Mark the day. Support what matters.",
++    label: "Birthday giving in the United Kingdom",
++    description:
++      "Explore teacher development, support for older people and conservation. Work locations are shown on each listing: Teach First works in England, while WWF-UK’s work also reaches beyond the UK.",
++    tip: "A UK organisation may work internationally. Check where a particular gift will be used and whether the giving option is suitable for you.",
++  },
++  global: {
++    title: "A day for you. A thought for the world.",
++    label: "International celebration giving",
++    description:
++      "Explore organisations working across borders on ocean plastic, wildlife and nature restoration. These listings include donation pages, a gift membership and a certificate shop.",
++    tip: "International describes the work, not universal payment eligibility. Check the recipient, currency, fees and any recurring terms on the official site.",
++  },
++};
++export default function RegionPage({
++  region,
++}: {
++  region: Exclude<Region, "all">;
++}) {
++  const c = content[region];
++  return (
++    <>
++      <section className="region-hero shell">
++        <Link href="/#missions" className="back-link">
++          ← All organisations
++        </Link>
++        <p className="eyebrow">{c.label}</p>
++        <h1>{c.title}</h1>
++        <p className="region-description">{c.description}</p>
++        <p className="region-trust">
++          <Icon name="external" />
++          Choose here. Give on the organisation’s website. We don’t process
++          donations.
++        </p>
++        <aside className="region-tip">
++          {c.tip}{" "}
++          {region === "usa" && (
++            <Link href="/global">Browse international organisations →</Link>
++          )}
++        </aside>
++      </section>
++      <Directory region={region} />
++      <div className="shell regional-next">
++        <h2>Bring your friends into the celebration.</h2>
++        <p>
++          Make a birthday-giving message with a link to your chosen
++          organisation.
++        </p>
++        <Link href="/message" className="button">
++          Write a message <Icon name="arrow" />
++        </Link>
++      </div>
++    </>
++  );
++}
+--- a/data/charities.ts
++++ b/data/charities.ts
+@@ -1,104 +1,262 @@
+-// data/charities.ts
+-
+-export type Category = 'Environment' | 'Education' | 'Elderly Support';
+-
++export const categories = [
++  "Environment",
++  "Education",
++  "Older people",
++  "Child rights",
++  "Food & nutrition",
++] as const;
++export type Category = (typeof categories)[number];
++export type Region = "all" | "india" | "usa" | "uk" | "global";
++export type ActionType =
++  "Donation page" | "Official website" | "Gift membership" | "Certificate shop";
+ export interface Charity {
++  id: string;
+   name: string;
++  category: Category;
++  regions: Region[];
++  worksIn: string;
++  description: string;
+   url: string;
+-  category: Category;
+-  description?: string;
+-  image?: string;
++  source: string;
++  actionType: ActionType;
++  action: string;
++  note?: string;
++  checked: string;
++  checkNote?: string;
+ }
+-
+-export const charitiesUSA: Charity[] = [
+-  {
++// Dates record an actual editorial source check, never a runtime timestamp.
++// See review/SOURCES.md for evidence and the limits of this check.
++export const charities: Charity[] = [
++  {
++    id: "roundglass",
++    name: "Roundglass Foundation",
++    category: "Environment",
++    regions: ["india"],
++    worksIn: "Punjab, India",
++    description:
++      "Works with communities in Punjab on tree planting, waste management and regenerative agriculture.",
++    url: "https://roundglassfoundation.org/donate/",
++    source: "https://roundglassfoundation.org/donate/",
++    actionType: "Donation page",
++    action: "Donate on Roundglass",
++    note: "The giving page offers several initiatives. Check which programme your gift will support.",
++    checked: "2026-10-21",
++  },
++  {
++    id: "pratham",
++    name: "Pratham",
++    category: "Education",
++    regions: ["india"],
++    worksIn: "India",
++    description:
++      "Supports children’s foundational learning, second-chance education for girls and women, and skills training for young people.",
++    url: "https://www.pratham.org/donation/",
++    source: "https://www.pratham.org/donation/",
++    actionType: "Donation page",
++    action: "Donate on Pratham",
++    checked: "2026-10-21",
++  },
++  {
++    id: "helpage",
++    name: "HelpAge India",
++    category: "Older people",
++    regions: ["india"],
++    worksIn: "India",
++    description:
++      "Provides healthcare, agecare and livelihood support for older people, alongside advocacy for their rights.",
++    url: "https://www.helpageindia.org/donate/",
++    source: "https://www.helpageindia.org/donate/",
++    actionType: "Donation page",
++    action: "Donate on HelpAge India",
++    note: "Giving from outside India? Read the organisation’s international-giving guidance first.",
++    checked: "2026-10-21",
++  },
++  {
++    id: "team-everest",
++    name: "Team Everest",
++    category: "Education",
++    regions: ["india"],
++    worksIn: "India",
++    description:
++      "Organises volunteering opportunities and student sponsorship, including scholarships to support young people’s education.",
++    url: "https://www.teameverest.ngo/",
++    source: "https://www.teameverest.ngo/",
++    actionType: "Official website",
++    action: "Visit Team Everest",
++    checked: "2026-10-21",
++  },
++  {
++    id: "cry",
++    name: "CRY – Child Rights and You",
++    category: "Child rights",
++    regions: ["india"],
++    worksIn: "India",
++    description:
++      "Works on children’s education, health and nutrition, and protection from child labour and child marriage.",
++    url: "https://www.cry.org/",
++    source: "https://www.cry.org/",
++    actionType: "Official website",
++    action: "Visit CRY",
++    checked: "2026-10-21",
++  },
++  {
++    id: "akshaya-patra",
++    name: "The Akshaya Patra Foundation",
++    category: "Food & nutrition",
++    regions: ["india"],
++    worksIn: "India",
++    description:
++      "Provides school meals for children in government and government-aided schools through the PM POSHAN programme.",
++    url: "https://www.akshayapatra.org/",
++    source: "https://www.akshayapatra.org/",
++    actionType: "Official website",
++    action: "Visit Akshaya Patra",
++    checked: "2026-10-21",
++  },
++  {
++    id: "donorschoose",
++    name: "DonorsChoose",
++    category: "Education",
++    regions: ["usa"],
++    worksIn: "United States",
++    description:
++      "Connects donors with requests from public school teachers for classroom materials and learning resources.",
++    url: "https://www.donorschoose.org/",
++    source: "https://www.donorschoose.org/",
++    actionType: "Official website",
++    action: "Visit DonorsChoose",
++    note: "Browse classroom projects on its website to choose a request to support.",
++    checked: "2026-10-21",
++  },
++  {
++    id: "teach-for-america",
++    name: "Teach For America",
++    category: "Education",
++    regions: ["usa"],
++    worksIn: "United States",
++    description:
++      "Recruits and supports teachers and education leaders working to expand opportunities for children.",
++    url: "https://www.teachforamerica.org/donate",
++    source: "https://www.teachforamerica.org/donate",
++    actionType: "Donation page",
++    action: "Donate on Teach For America",
++    checked: "2026-10-21",
++  },
++  {
++    id: "meals-on-wheels",
++    name: "Meals on Wheels America",
++    category: "Older people",
++    regions: ["usa"],
++    worksIn: "United States",
++    description:
++      "Supports a network of local programmes that provide meals, care and connection to older adults.",
++    url: "https://www.mealsonwheelsamerica.org/donate/",
++    source: "https://www.mealsonwheelsamerica.org/donate/",
++    actionType: "Donation page",
++    action: "Donate on Meals on Wheels",
++    note: "This link supports the national organisation. Check its website if you want to give to a local programme.",
++    checked: "2026-10-21",
++  },
++  {
++    id: "wwf",
++    name: "WWF-UK",
++    category: "Environment",
++    regions: ["uk", "global"],
++    worksIn: "United Kingdom and worldwide",
++    description:
++      "Works to protect wildlife and habitats and address threats to nature, including through policy and conservation programmes.",
++    url: "https://www.wwf.org.uk/donate",
++    source: "https://www.wwf.org.uk/",
++    actionType: "Donation page",
++    action: "Donate on WWF-UK",
++    checked: "2026-10-21",
++    checkNote:
++      "Official information and donation landing page reviewed. The link opens a choice of giving options; payment completion was not tested.",
++  },
++  {
++    id: "teach-first",
++    name: "Teach First",
++    category: "Education",
++    regions: ["uk"],
++    worksIn: "England",
++    description:
++      "Recruits and develops teachers and school leaders in schools serving disadvantaged communities.",
++    url: "https://www.teachfirst.org.uk/donate",
++    source: "https://www.teachfirst.org.uk/donate",
++    actionType: "Donation page",
++    action: "Donate on Teach First",
++    checked: "2026-10-21",
++  },
++  {
++    id: "age-uk",
++    name: "Age UK",
++    category: "Older people",
++    regions: ["uk"],
++    worksIn: "United Kingdom",
++    description:
++      "Supports older people through information, advice, friendship services and campaigns on later life.",
++    url: "https://www.ageuk.org.uk/get-involved/donate/",
++    source: "https://www.ageuk.org.uk/get-involved/donate/",
++    actionType: "Donation page",
++    action: "Donate on Age UK",
++    checked: "2026-10-21",
++  },
++  {
++    id: "ocean-cleanup",
+     name: "The Ocean Cleanup",
+     category: "Environment",
++    regions: ["global"],
++    worksIn: "Ocean and river projects internationally",
++    description:
++      "Develops and operates systems to remove plastic from the ocean and intercept it in rivers.",
+     url: "https://theoceancleanup.com/donate/",
+-    image: "/images/charities/ocean_cleanup.png",
+-    description: "Developing advanced technologies to rid the world's oceans of plastic."
+-  },
+-  {
++    source: "https://theoceancleanup.com/donate/",
++    actionType: "Donation page",
++    action: "Donate on The Ocean Cleanup",
++    checked: "2026-10-21",
++  },
++  {
++    id: "planet-wild",
+     name: "Planet Wild",
+     category: "Environment",
++    regions: ["global"],
++    worksIn: "Nature restoration projects worldwide",
++    description:
++      "Funds rewilding projects, including habitat restoration and species protection, through memberships.",
+     url: "https://planetwild.com/gift/learn-more",
+-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2071&auto=format&fit=crop",
+-    description: "Funding high-impact nature restoration projects to protect global biodiversity."
+-  },
+-  {
++    source: "https://planetwild.com/gift/learn-more",
++    actionType: "Gift membership",
++    action: "Explore Planet Wild gifts",
++    note: "This is a paid gift membership. Read its terms and what the recipient receives before buying.",
++    checked: "2026-10-21",
++  },
++  {
++    id: "plastic-fischer",
+     name: "Plastic Fischer",
+     category: "Environment",
++    regions: ["india", "global"],
++    worksIn: "India and Indonesia",
++    description:
++      "Collects plastic from rivers and riverbanks to help prevent it from reaching the ocean.",
+     url: "https://shop.plasticfischer.com/products/plastic-certificate",
+-    image: "https://images.unsplash.com/photo-1621451537084-482c73073a0f?q=80&w=2070&auto=format&fit=crop",
+-    description: "Stopping plastic pollution in rivers before it reaches our oceans."
+-  },
+-  {
+-    name: "Donors Choose",
+-    category: "Education",
+-    url: "https://www.donorschoose.org/",
+-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
+-    description: "Helping teachers get the resources they need for their students to thrive."
+-  },
+-  {
+-    name: "Teach For America",
+-    category: "Education",
+-    url: "https://www.teachforamerica.org/donate",
+-    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2070&auto=format&fit=crop",
+-    description: "Expanding educational opportunities in underserved communities."
+-  },
+-  {
+-    name: "Meals on Wheels America",
+-    category: "Elderly Support",
+-    url: "https://www.mealsonwheelsamerica.org/donate/",
+-    image: "/images/charities/meals_on_wheels.png",
+-    description: "Supporting the health and dignity of seniors through nutrition."
++    source: "https://plasticfischer.com/",
++    actionType: "Certificate shop",
++    action: "View Plastic Fischer certificates",
++    note: "This is a product purchase. Check the certificate terms and whether you are choosing a one-time purchase or subscription.",
++    checked: "2026-10-21",
+   },
+ ];
+-
+-export const charitiesIndia: Charity[] = [
+-  {
+-    name: "Roundglass Foundation",
+-    category: "Environment",
+-    url: "https://roundglassfoundation.org/donate/",
+-    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",
+-    description: "Building sustainable and vibrant rural communities through reforestation."
+-  },
+-  {
+-    name: "Pratham",
+-    category: "Education",
+-    url: "https://www.pratham.org/donation/",
+-    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop",
+-    description: "Improving the quality of education for millions of children."
+-  },
+-  {
+-    name: "HelpAge India",
+-    category: "Elderly Support",
+-    url: "https://www.helpageindia.org/donate/",
+-    image: "/images/charities/helpage_india.png",
+-    description: "Advocating for the rights and well-being of disadvantaged older persons."
+-  },
++export const regions: { id: Region; label: string; href: string }[] = [
++  { id: "all", label: "All locations", href: "/" },
++  { id: "india", label: "India", href: "/india" },
++  { id: "usa", label: "United States", href: "/usa" },
++  { id: "uk", label: "United Kingdom", href: "/uk" },
++  { id: "global", label: "International", href: "/global" },
+ ];
+-
+-export const charitiesUK: Charity[] = [
+-  {
+-    name: "WWF UK",
+-    category: "Environment",
+-    url: "https://www.wwf.org.uk/donate",
+-    image: "https://images.unsplash.com/photo-1550358864-518f202c02ba?q=80&w=2070&auto=format&fit=crop",
+-    description: "Sustaining the natural world and protecting endangered species for a vibrant, wild future."
+-  },
+-  {
+-    name: "Teach First",
+-    category: "Education",
+-    url: "https://www.teachfirst.org.uk/donate",
+-    image: "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?q=80&w=2070&auto=format&fit=crop",
+-    description: "Empowering children through exceptional education and quality teaching."
+-  },
+-  {
+-    name: "Age UK",
+-    category: "Elderly Support",
+-    url: "https://www.ageuk.org.uk/get-involved/donate/",
+-    image: "/images/charities/age_uk.png",
+-    description: "Ensuring dignity, companionship, and expert support for potential-filled later lives."
+-  },
+-];+export const categorySlug = (category: string) =>
++  category.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-");
++export const charitiesIndia = charities.filter((c) =>
++  c.regions.includes("india"),
++);
++export const charitiesUSA = charities.filter((c) => c.regions.includes("usa"));
++export const charitiesUK = charities.filter((c) => c.regions.includes("uk"));
+--- a/lib/sharing.ts
++++ b/lib/sharing.ts
+@@ -0,0 +1,21 @@
++export type ShareOutcome = 'copied' | 'shared' | 'cancelled' | 'select';
++export interface SharingApi {
++  clipboard?: { writeText(text: string): Promise<void> };
++  share?: (data: { title: string; text: string }) => Promise<void>;
++}
++export async function copyMessage(text: string, api: SharingApi): Promise<ShareOutcome> {
++  try {
++    if (!api.clipboard?.writeText) return 'select';
++    await api.clipboard.writeText(text);
++    return 'copied';
++  } catch { return 'select'; }
++}
++export async function shareMessage(text: string, api: SharingApi): Promise<ShareOutcome> {
++  if (!api.share) return copyMessage(text, api);
++  try {
++    await api.share({ title: 'A birthday thought', text });
++    return 'shared';
++  } catch (error) {
++    return error instanceof Error && error.name === 'AbortError' ? 'cancelled' : 'select';
++  }
++}
+--- a/lib/site.ts
++++ b/lib/site.ts
+@@ -0,0 +1,39 @@
++import type { Metadata } from "next";
++export const siteUrl = "https://www.celebrateforchange.org";
++// Fail closed for previews and local builds. Explicit opt-in only for an approved production deployment.
++export const isIndexable =
++  process.env.SITE_INDEXABLE === "true" &&
++  process.env.NODE_ENV === "production" &&
++  (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production");
++export function pageMetadata(
++  title: string,
++  description: string,
++  path: string,
++): Metadata {
++  return {
++    title: { absolute: `${title} | Celebrate for Change` },
++    description,
++    alternates: { canonical: `${siteUrl}${path}` },
++    openGraph: {
++      title: `${title} | Celebrate for Change`,
++      description,
++      url: `${siteUrl}${path}`,
++      type: "website",
++      siteName: "Celebrate for Change",
++      images: [
++        {
++          url: `${siteUrl}/opengraph-image`,
++          width: 1200,
++          height: 630,
++          alt: "Celebrate for Change — a guide to giving on your birthday",
++        },
++      ],
++    },
++    twitter: {
++      card: "summary_large_image",
++      title,
++      description,
++      images: [`${siteUrl}/opengraph-image`],
++    },
++  };
++}
+--- a/next.config.ts
++++ b/next.config.ts
+@@ -1,7 +1,19 @@
+ import type { NextConfig } from "next";
+-
++const indexable =
++  process.env.SITE_INDEXABLE === "true" &&
++  process.env.NODE_ENV === "production" &&
++  (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === "production");
+ const nextConfig: NextConfig = {
+-  /* config options here */
++  poweredByHeader: false,
++  async headers() {
++    return indexable
++      ? []
++      : [
++          {
++            source: "/:path*",
++            headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
++          },
++        ];
++  },
+ };
+-
+ export default nextConfig;
+--- a/package.json
++++ b/package.json
+@@ -3,13 +3,13 @@
+   "version": "0.1.0",
+   "private": true,
+   "scripts": {
+-    "dev": "next dev",
+-    "build": "next build",
++    "dev": "next dev --webpack",
++    "build": "next build --webpack",
+     "start": "next start",
+     "lint": "eslint"
+   },
+   "dependencies": {
+-    "next": "16.1.1",
++    "next": "^16.4.2",
+     "react": "19.2.3",
+     "react-dom": "19.2.3"
+   },
+@@ -19,7 +19,7 @@
+     "@types/react": "^19",
+     "@types/react-dom": "^19",
+     "eslint": "^9",
+-    "eslint-config-next": "16.1.1",
++    "eslint-config-next": "^16.4.2",
+     "tailwindcss": "^4",
+     "typescript": "^5"
+   }
+--- a/scripts/check-links.mjs
++++ b/scripts/check-links.mjs
+@@ -0,0 +1,37 @@
++import fs from "node:fs/promises";
++import { charities } from "../data/charities.ts";
++const links = [...new Set(charities.flatMap((c) => [c.url, c.source]))];
++const results = await Promise.all(
++  links.map(async (url) => {
++    try {
++      const response = await fetch(url, { signal: AbortSignal.timeout(25000) });
++      const html = await response.text();
++      return {
++        url,
++        status: response.status,
++        finalUrl: response.url,
++        title: html
++          .match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]
++          ?.replace(/\s+/g, " ")
++          .slice(0, 180),
++        bytes: Buffer.byteLength(html),
++      };
++    } catch (error) {
++      return { url, error: error.message };
++    }
++  }),
++);
++await fs.writeFile(
++  "review/link-checks.json",
++  JSON.stringify(
++    {
++      checkedOn: "2026-10-21",
++      method:
++        "Read-only HTTP GET; no payments or forms submitted. A successful response is not proof of a working payment flow.",
++      results,
++    },
++    null,
++    2,
++  ),
++);
++console.log(results);
+--- a/scripts/check-routes.mjs
++++ b/scripts/check-routes.mjs
+@@ -0,0 +1,98 @@
++import fs from "node:fs/promises";
++import assert from "node:assert/strict";
++import { charities } from "../data/charities.ts";
++const base = process.argv[2] || "http://127.0.0.1:3000";
++const production = process.argv.includes("--production");
++const pages = [
++  "/",
++  "/india",
++  "/usa",
++  "/uk",
++  "/global",
++  "/about",
++  "/disclaimer",
++  "/methodology",
++  "/message",
++];
++const results = [];
++for (const path of [
++  ...pages,
++  "/robots.txt",
++  "/sitemap.xml",
++  "/opengraph-image",
++  "/missing-review-page",
++  "/india/nonexistent",
++]) {
++  const response = await fetch(base + path);
++  const bytes = Buffer.from(await response.arrayBuffer());
++  const html = bytes.toString();
++  const result = {
++    path,
++    status: response.status,
++    bytes: bytes.length,
++    type: response.headers.get("content-type"),
++    robotsHeader: response.headers.get("x-robots-tag"),
++  };
++  if (pages.includes(path)) {
++    assert.equal(response.status, 200, path);
++    result.title = html.match(/<title>(.*?)<\/title>/)?.[1];
++    result.canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
++    result.metaRobots = html.match(
++      /<meta name="robots" content="([^"]+)"/,
++    )?.[1];
++    result.h1s = (html.match(/<h1[ >]/g) || []).length;
++    result.description = html.match(
++      /<meta name="description" content="([^"]+)"/,
++    )?.[1];
++    assert.equal(result.h1s, 1, path + " h1");
++    assert.equal(
++      result.canonical,
++      `https://www.celebrateforchange.org${path === "/" ? "" : path}`,
++    );
++    assert.ok(result.title && result.description);
++    assert.ok(html.includes('property="og:image"'));
++    assert.ok(html.includes('name="twitter:card"'));
++    if (production) {
++      assert.equal(result.metaRobots, "index, follow");
++      assert.equal(result.robotsHeader, null);
++    } else {
++      assert.equal(result.metaRobots, "noindex, nofollow");
++      assert.equal(result.robotsHeader, "noindex, nofollow");
++    }
++    if (path === "/")
++      for (const c of charities)
++        assert.ok(
++          html.includes(`href="${c.url}"`),
++          "Missing destination " + c.id,
++        );
++  } else if (path.includes("nonexistent") || path.includes("missing-review")) {
++    assert.equal(response.status, 404);
++    assert.ok(html.includes("noindex"));
++    assert.ok(html.includes("Browse organisations"));
++  } else if (path === "/robots.txt") {
++    assert.equal(response.status, 200);
++    assert.ok(html.includes(production ? "Allow: /" : "Disallow: /"));
++    result.body = html;
++  } else if (path === "/sitemap.xml") {
++    assert.equal(response.status, 200);
++    result.urls = (html.match(/<loc>/g) || []).length;
++    assert.equal(result.urls, production ? 9 : 0);
++  } else {
++    assert.equal(response.status, 200);
++    assert.ok(result.type.includes("image/png"));
++    await fs.writeFile("review/after/social-preview.png", bytes);
++  }
++  results.push(result);
++}
++assert.equal(
++  new Set(results.filter((r) => r.title).map((r) => r.title)).size,
++  9,
++  "Unique titles",
++);
++await fs.writeFile(
++  `review/route-checks-${production ? "production" : "preview"}.json`,
++  JSON.stringify(results, null, 2),
++);
++console.log(
++  `PASS: ${results.length} HTTP checks, unique metadata, canonical URLs, server-rendered destinations, social image, real 404s and ${production ? "production" : "preview"} indexing rules.`,
++);
+--- a/scripts/sharing.test.mjs
++++ b/scripts/sharing.test.mjs
+@@ -0,0 +1,10 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {copyMessage,shareMessage} from '../lib/sharing.ts';
++test('copy waits for success and preserves edited text',async()=>{let copied;assert.equal(await copyMessage('My edited invitation',{clipboard:{writeText:async text=>{copied=text}}}),'copied');assert.equal(copied,'My edited invitation')});
++test('denied clipboard offers manual selection without false success',async()=>{assert.equal(await copyMessage('Draft',{clipboard:{writeText:async()=>{throw new Error('Permission denied')}}}),'select')});
++test('missing clipboard offers manual selection',async()=>{assert.equal(await copyMessage('Draft',{}),'select')});
++test('missing share API falls back to copy',async()=>{let text;assert.equal(await shareMessage('Draft',{clipboard:{writeText:async value=>{text=value}}}),'copied');assert.equal(text,'Draft')});
++test('share cancellation does not copy or retry',async()=>{let copied=false;const e=new Error('Cancelled');e.name='AbortError';assert.equal(await shareMessage('Draft',{share:async()=>{throw e},clipboard:{writeText:async()=>{copied=true}}}),'cancelled');assert.equal(copied,false)});
++test('failed share offers manual selection',async()=>{assert.equal(await shareMessage('Draft',{share:async()=>{throw new Error('Not supported')}}),'select')});
++test('successful share only reports that the share sheet resolved',async()=>{let payload;assert.equal(await shareMessage('Draft',{share:async data=>{payload=data}}),'shared');assert.deepEqual(payload,{title:'A birthday thought',text:'Draft'})});

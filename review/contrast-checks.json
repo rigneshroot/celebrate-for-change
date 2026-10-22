@@ -1,0 +1,72 @@
+[
+  {
+    "name": "body",
+    "fg": "#203d32",
+    "bg": "#fcfcf9",
+    "ratio": 11.51,
+    "passes": true
+  },
+  {
+    "name": "muted",
+    "fg": "#58655e",
+    "bg": "#fcfcf9",
+    "ratio": 5.94,
+    "passes": true
+  },
+  {
+    "name": "muted on mint",
+    "fg": "#58655e",
+    "bg": "#edf3e8",
+    "ratio": 5.41,
+    "passes": true
+  },
+  {
+    "name": "button",
+    "fg": "#ffffff",
+    "bg": "#245c43",
+    "ratio": 7.82,
+    "passes": true
+  },
+  {
+    "name": "purple label",
+    "fg": "#5e4778",
+    "bg": "#e9e3f3",
+    "ratio": 6.32,
+    "passes": true
+  },
+  {
+    "name": "older people",
+    "fg": "#885729",
+    "bg": "#ffffff",
+    "ratio": 6.1,
+    "passes": true
+  },
+  {
+    "name": "child rights",
+    "fg": "#8a435a",
+    "bg": "#ffffff",
+    "ratio": 6.93,
+    "passes": true
+  },
+  {
+    "name": "food",
+    "fg": "#36677e",
+    "bg": "#ffffff",
+    "ratio": 6.18,
+    "passes": true
+  },
+  {
+    "name": "input border",
+    "fg": "#84947b",
+    "bg": "#ffffff",
+    "ratio": 3.23,
+    "passes": true
+  },
+  {
+    "name": "focus",
+    "fg": "#7353a2",
+    "bg": "#fcfcf9",
+    "ratio": 5.86,
+    "passes": true
+  }
+]

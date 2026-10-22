@@ -1,0 +1,19 @@
+(node:506) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/rigneshpadamanur/Documents/celebrate-for-change-main/lib/sharing.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /Users/rigneshpadamanur/Documents/celebrate-for-change-main/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ copy waits for success and preserves edited text (0.656584ms)
+✔ denied clipboard offers manual selection without false success (0.311417ms)
+✔ missing clipboard offers manual selection (0.811208ms)
+✔ missing share API falls back to copy (0.197083ms)
+✔ share cancellation does not copy or retry (3.321042ms)
+✔ failed share offers manual selection (0.347167ms)
+✔ successful share only reports that the share sheet resolved (1.397041ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 272.356708

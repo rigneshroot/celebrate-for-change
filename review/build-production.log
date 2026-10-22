@@ -1,0 +1,39 @@
+
+> birthday-impact@0.1.0 build
+> next build --webpack
+
+▲ Next.js 16.4.2 (webpack)
+✓ Running next.config.ts took 89ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.0s
+  Running TypeScript ...
+  Finished TypeScript in 2.1s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/15) ...
+  Generating static pages using 7 workers (3/15) 
+  Generating static pages using 7 workers (7/15) 
+  Generating static pages using 7 workers (11/15) 
+✓ Generating static pages using 7 workers (15/15) in 3.3s
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /disclaimer
+├ ○ /global
+├ ○ /icon.svg
+├ ○ /india
+├ ○ /message
+├ ○ /methodology
+├ ○ /opengraph-image
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+├ ○ /uk
+└ ○ /usa
+
+
+○  (Static)  prerendered as static content
+

@@ -1,0 +1,136 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "CELEBRATE FOR CHANGE",
+      "FROM CELEBRATION TO IMPACT",
+      "SELECT COUNTRY",
+      "CHOOSE A CAUSE",
+      "DIRECT IMPACT",
+      "UNITED STATES",
+      "INDIA",
+      "UNITED KINGDOM"
+    ],
+    "external": []
+  },
+  {
+    "path": "/india",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "INDIA",
+      "Roundglass Foundation",
+      "Pratham",
+      "HelpAge India",
+      "Team Everest",
+      "CRY (Child Rights and You)",
+      "Akshaya Patra Foundation"
+    ],
+    "external": [
+      "https://roundglassfoundation.org/donate/",
+      "https://www.pratham.org/donation/",
+      "https://www.helpageindia.org/donate/",
+      "https://www.teameverest.ngo/",
+      "https://www.cry.org/",
+      "https://www.akshayapatra.org/"
+    ]
+  },
+  {
+    "path": "/usa",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "USA",
+      "The Ocean Cleanup",
+      "Planet Wild",
+      "Plastic Fischer",
+      "Donors Choose",
+      "Teach For America",
+      "Meals on Wheels America"
+    ],
+    "external": [
+      "https://theoceancleanup.com/donate/",
+      "https://planetwild.com/gift/learn-more",
+      "https://shop.plasticfischer.com/products/plastic-certificate",
+      "https://www.donorschoose.org/",
+      "https://www.teachforamerica.org/donate",
+      "https://www.mealsonwheelsamerica.org/donate/"
+    ]
+  },
+  {
+    "path": "/uk",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "UNITED KINGDOM",
+      "WWF UK",
+      "Teach First",
+      "Age UK"
+    ],
+    "external": [
+      "https://www.wwf.org.uk/donate",
+      "https://www.teachfirst.org.uk/donate",
+      "https://www.ageuk.org.uk/get-involved/donate/"
+    ]
+  },
+  {
+    "path": "/about",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "THE MISSION",
+      "The Purpose",
+      "The Mission",
+      "The Visionary",
+      "Core Values",
+      "Ethical Design",
+      "Transparency",
+      "Education"
+    ],
+    "external": []
+  },
+  {
+    "path": "/disclaimer",
+    "status": 200,
+    "title": "Celebrate for Change",
+    "headings": [
+      "LEGAL DISCLAIMER"
+    ],
+    "external": []
+  },
+  {
+    "path": "/robots.txt",
+    "status": 404,
+    "title": "404: This page could not be found.",
+    "robots": "<meta name=\"robots\" content=\"noindex\"/>",
+    "headings": [
+      "404",
+      "This page could not be found."
+    ],
+    "external": []
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 404,
+    "title": "404: This page could not be found.",
+    "robots": "<meta name=\"robots\" content=\"noindex\"/>",
+    "headings": [
+      "404",
+      "This page could not be found."
+    ],
+    "external": []
+  },
+  {
+    "path": "/this-page-does-not-exist-cfc-review",
+    "status": 404,
+    "title": "404: This page could not be found.",
+    "robots": "<meta name=\"robots\" content=\"noindex\"/>",
+    "headings": [
+      "404",
+      "This page could not be found."
+    ],
+    "external": []
+  }
+]

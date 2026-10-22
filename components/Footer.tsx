@@ -1,22 +1,33 @@
-import Link from 'next/link';
-
+import Link from "next/link";
+import Icon from "./Icon";
 export default function Footer() {
   return (
-    <footer className="w-full bg-black border-t border-white/5 py-24 mt-auto relative overflow-hidden">
-      {/* Subtle bottom glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent blur-sm"></div>
-
-      <div className="max-w-6xl mx-auto px-8 flex flex-col items-center gap-8 text-center">
-        <div className="space-y-4">
-          <p className="font-montserrat text-[10px] tracking-[0.2em] text-white/60 font-light max-w-md mx-auto leading-loose">
-            © 2026 Celebrate for Change <br />
-            A global social impact initiative focused on transparent giving.
-          </p>
+    <footer className="site-footer">
+      <div className="shell footer-top">
+        <div>
+          <Link className="brand" href="/">
+            <span className="brand-mark">
+              <Icon name="gift" />
+            </span>
+            <span>
+              Celebrate<span className="brand-second">for Change.</span>
+            </span>
+          </Link>
+          <p>A little celebration. A thoughtful way to give.</p>
         </div>
-
-        <div className="flex items-center justify-center gap-6 font-montserrat text-[10px] tracking-[0.2em] text-white/80">
-          <Link href="/disclaimer" className="hover:text-emerald-500 transition-all duration-300">Disclaimer</Link>
-        </div>
+        <nav aria-label="Footer">
+          <Link href="/about">About the guide</Link>
+          <Link href="/methodology">How listings are checked</Link>
+          <Link href="/disclaimer">Disclaimer & privacy</Link>
+          <Link href="/methodology#corrections">Corrections</Link>
+        </nav>
+      </div>
+      <div className="shell footer-bottom">
+        <p>A student-built guide by Rignesh.</p>
+        <p>
+          Donations happen on organisations’ websites. We don’t collect or
+          process them.
+        </p>
       </div>
     </footer>
   );

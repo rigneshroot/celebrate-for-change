@@ -1,0 +1,147 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 62001,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Birthday giving guide | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Make your celebration a reason to give. Browse organisations by cause and where they work, then support them on their own websites."
+  },
+  {
+    "path": "/india",
+    "status": 200,
+    "bytes": 35671,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Birthday Giving in India | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/india",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Explore organisations working in India on education, older people’s care, child rights, school meals and the environment. Give on their own websites."
+  },
+  {
+    "path": "/usa",
+    "status": 200,
+    "bytes": 27098,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Birthday Giving in the United States | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/usa",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Find organisations supporting US classrooms, educational opportunities and older adults. Compare their work and continue to their official websites."
+  },
+  {
+    "path": "/uk",
+    "status": 200,
+    "bytes": 26794,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Birthday Giving in the United Kingdom | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/uk",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Explore teacher development, older people’s support and conservation with clear work locations and links to organisations’ official giving pages."
+  },
+  {
+    "path": "/global",
+    "status": 200,
+    "bytes": 29115,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "International Celebration Giving | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/global",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Compare international environmental organisations, donation pages, gift memberships and plastic certificates. Check the terms on each official website."
+  },
+  {
+    "path": "/about",
+    "status": 200,
+    "bytes": 19686,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "About this student-built guide | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/about",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Meet Celebrate for Change, a student project by Rignesh that helps people discover organisations to support through birthdays and other celebrations."
+  },
+  {
+    "path": "/disclaimer",
+    "status": 200,
+    "bytes": 18752,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Disclaimer and privacy | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/disclaimer",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Celebrate for Change does not collect or process donations. Read about external websites, listing limitations and the local birthday-message tool."
+  },
+  {
+    "path": "/methodology",
+    "status": 200,
+    "bytes": 28834,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "How listings are selected and checked | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/methodology",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Understand the guide’s source checks, selection limits, work-location labels and outgoing link types. These are not independent impact evaluations."
+  },
+  {
+    "path": "/message",
+    "status": 200,
+    "bytes": 19932,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null,
+    "title": "Write a birthday giving message | Celebrate for Change",
+    "canonical": "https://www.celebrateforchange.org/message",
+    "metaRobots": "index, follow",
+    "h1s": 1,
+    "description": "Make an editable birthday message asking friends to support an organisation instead of buying gifts. Copy it or open your device’s share sheet."
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "bytes": 80,
+    "type": "text/plain",
+    "robotsHeader": null,
+    "body": "User-Agent: *\nAllow: /\n\nSitemap: https://www.celebrateforchange.org/sitemap.xml\n"
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "bytes": 698,
+    "type": "application/xml",
+    "robotsHeader": null,
+    "urls": 9
+  },
+  {
+    "path": "/opengraph-image",
+    "status": 200,
+    "bytes": 56214,
+    "type": "image/png",
+    "robotsHeader": null
+  },
+  {
+    "path": "/missing-review-page",
+    "status": 404,
+    "bytes": 15106,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null
+  },
+  {
+    "path": "/india/nonexistent",
+    "status": 404,
+    "bytes": 15106,
+    "type": "text/html; charset=utf-8",
+    "robotsHeader": null
+  }
+]

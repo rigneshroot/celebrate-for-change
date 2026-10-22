@@ -1,28 +1,31 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter, Montserrat, Michroma } from 'next/font/google';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat' });
-const michroma = Michroma({ weight: '400', subsets: ['latin'], variable: '--font-michroma' });
-
+import "./globals.css";
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { isIndexable, siteUrl } from "@/lib/site";
 export const metadata: Metadata = {
-  title: 'Celebrate for Change',
-  description: 'Turn your birthday into real-world impact.',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Celebrate for Change | Birthday giving guide",
+    template: "%s | Celebrate for Change",
+  },
+  description:
+    "Find an organisation to support for your birthday, learn where it works, and give on its own website. A student-built celebration-giving guide.",
+  robots: { index: isIndexable, follow: isIndexable },
 };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${montserrat.variable} ${michroma.variable} min-h-screen flex flex-col`} style={{ fontFamily: 'var(--font-montserrat), var(--font-inter), system-ui, sans-serif' }}>
+    <html lang="en">
+      <body>
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
         <Navbar />
-        <main className="flex-grow w-full">
+        <main id="main-content" tabIndex={-1}>
           {children}
         </main>
         <Footer />

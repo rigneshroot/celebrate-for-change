@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {copyMessage,shareMessage} from '../lib/sharing.ts';
+test('copy waits for success and preserves edited text',async()=>{let copied;assert.equal(await copyMessage('My edited invitation',{clipboard:{writeText:async text=>{copied=text}}}),'copied');assert.equal(copied,'My edited invitation')});
+test('denied clipboard offers manual selection without false success',async()=>{assert.equal(await copyMessage('Draft',{clipboard:{writeText:async()=>{throw new Error('Permission denied')}}}),'select')});
+test('missing clipboard offers manual selection',async()=>{assert.equal(await copyMessage('Draft',{}),'select')});
+test('missing share API falls back to copy',async()=>{let text;assert.equal(await shareMessage('Draft',{clipboard:{writeText:async value=>{text=value}}}),'copied');assert.equal(text,'Draft')});
+test('share cancellation does not copy or retry',async()=>{let copied=false;const e=new Error('Cancelled');e.name='AbortError';assert.equal(await shareMessage('Draft',{share:async()=>{throw e},clipboard:{writeText:async()=>{copied=true}}}),'cancelled');assert.equal(copied,false)});
+test('failed share offers manual selection',async()=>{assert.equal(await shareMessage('Draft',{share:async()=>{throw new Error('Not supported')}}),'select')});
+test('successful share only reports that the share sheet resolved',async()=>{let payload;assert.equal(await shareMessage('Draft',{share:async data=>{payload=data}}),'shared');assert.deepEqual(payload,{title:'A birthday thought',text:'Draft'})});

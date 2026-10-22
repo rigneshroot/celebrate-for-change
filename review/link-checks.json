@@ -1,0 +1,125 @@
+{
+  "checkedOn": "2026-10-21",
+  "method": "Read-only HTTP GET; no payments or forms submitted. A successful response is not proof of a working payment flow.",
+  "results": [
+    {
+      "url": "https://roundglassfoundation.org/donate/",
+      "status": 200,
+      "finalUrl": "https://roundglassfoundation.org/donate/",
+      "title": "Get Involved - Donate to Punjab",
+      "bytes": 76763
+    },
+    {
+      "url": "https://www.pratham.org/donation/",
+      "status": 200,
+      "finalUrl": "https://www.pratham.org/donation/",
+      "title": "Donate &#8211; Pratham",
+      "bytes": 213566
+    },
+    {
+      "url": "https://www.helpageindia.org/donate/",
+      "status": 200,
+      "finalUrl": "https://www.helpageindia.org/donate",
+      "title": "Donate for Elderly Care in India | Make a Difference",
+      "bytes": 702904
+    },
+    {
+      "url": "https://www.teameverest.ngo/",
+      "status": 200,
+      "finalUrl": "https://www.teameverest.ngo/",
+      "title": " Team Everest - 1 Place for all your Volunteering needs ",
+      "bytes": 201778
+    },
+    {
+      "url": "https://www.cry.org/",
+      "status": 307,
+      "finalUrl": "https://www.cry.org/",
+      "title": "You are being redirected...",
+      "bytes": 1439
+    },
+    {
+      "url": "https://www.akshayapatra.org/",
+      "status": 200,
+      "finalUrl": "https://www.akshayapatra.org/",
+      "title": "Akshaya Patra-NGO in India Supporting Food & Education of Children",
+      "bytes": 171684
+    },
+    {
+      "url": "https://www.donorschoose.org/",
+      "status": 200,
+      "finalUrl": "https://www.donorschoose.org/",
+      "title": "DonorsChoose: Support a classroom. Build a future.",
+      "bytes": 66207
+    },
+    {
+      "url": "https://www.teachforamerica.org/donate",
+      "status": 200,
+      "finalUrl": "https://www.teachforamerica.org/donate",
+      "title": "Make a Donation | One Time Or Recurring | Teach For America",
+      "bytes": 112768
+    },
+    {
+      "url": "https://www.mealsonwheelsamerica.org/donate/",
+      "status": 200,
+      "finalUrl": "https://www.mealsonwheelsamerica.org/donate/",
+      "title": "Donate to Support Seniors Nationwide | Make an Impact Today",
+      "bytes": 20559
+    },
+    {
+      "url": "https://www.wwf.org.uk/donate",
+      "status": 200,
+      "finalUrl": "https://support.wwf.org.uk/donate-to-wwf",
+      "title": "Choose a WWF Appeal | Charity Donation Gifts | WWF UK",
+      "bytes": 58469
+    },
+    {
+      "url": "https://www.wwf.org.uk/",
+      "status": 200,
+      "finalUrl": "https://www.wwf.org.uk/",
+      "title": "World Wide Fund for Nature | WWF",
+      "bytes": 80438
+    },
+    {
+      "url": "https://www.teachfirst.org.uk/donate",
+      "status": 200,
+      "finalUrl": "https://www.teachfirst.org.uk/donate",
+      "title": "Donate | Teach First",
+      "bytes": 96584
+    },
+    {
+      "url": "https://www.ageuk.org.uk/get-involved/donate/",
+      "status": 200,
+      "finalUrl": "https://www.ageuk.org.uk/get-involved/donate/",
+      "title": "Donate to help older people | Age UK",
+      "bytes": 105036
+    },
+    {
+      "url": "https://theoceancleanup.com/donate/",
+      "status": 200,
+      "finalUrl": "https://theoceancleanup.com/donate/",
+      "title": "Donate | Help Fund the Cleanup | The Ocean Cleanup",
+      "bytes": 209582
+    },
+    {
+      "url": "https://planetwild.com/gift/learn-more",
+      "status": 200,
+      "finalUrl": "https://planetwild.com/gift/learn-more",
+      "title": "Planet Wild - Rewilding Gift",
+      "bytes": 70715
+    },
+    {
+      "url": "https://shop.plasticfischer.com/products/plastic-certificate",
+      "status": 200,
+      "finalUrl": "https://shop.plasticfischer.com/products/plastic-certificate",
+      "title": " Plastic Fischer&#39;s Tackle Shop ",
+      "bytes": 373485
+    },
+    {
+      "url": "https://plasticfischer.com/",
+      "status": 200,
+      "finalUrl": "https://plasticfischer.com/",
+      "title": "Plastic Fischer | Prevent Ocean Pollution for Environmental Impact",
+      "bytes": 960358
+    }
+  ]
+}
